@@ -23,6 +23,7 @@
             --output-bg: #f0f2f5; /* A slightly different background for the generated password, to make it feel special. */
             --button-secondary-bg: #333333; /* The copy button. Dark, like the intentions of those who copy. */
             --button-secondary-hover: #444444; /* A little less dark for when you hesitate before clicking. */
+            --bitcoin-orange: #f7931a; /* Bitcoin Orange (Fallback Color) */
         }
 
         /* The great equalizer. Forcing all elements to follow the same basic rules. A tiny tyrant. */
@@ -39,7 +40,7 @@
             background-color: var(--bg-light);
             color: var(--text-primary);
             padding: 20px;
-            padding-bottom: 140px; 
+            /* MODIFICADO: Removido o padding-bottom, que não é mais necessário com o rodapé estático. */
         }
 
         /* The main "box" where everything happens.
@@ -83,14 +84,14 @@
             display: block;
             margin-bottom: 12px;
         }
-
-        /* Aligns the inputs and the increment/decrement buttons. */
+        
+        /* Input Group Layout */
         .input-group {
             display: flex;
             align-items: center;
         }
 
-        /* Styling the number fields. Giving them a specific look. */
+        /* Number Inputs */
         .password-length, .serial-count {
             width: 70px;
             text-align: center;
@@ -108,7 +109,7 @@
             box-shadow: 0 0 0 3px rgba(0, 156, 130, 0.15);
         }
         
-        /* Container for the plus/minus buttons and the slider. */
+        /* Increment/Decrement Controls */
         .increment-decrement {
             display: flex;
             align-items: center;
@@ -198,7 +199,7 @@
             margin-bottom: 15px;
         }
         
-        /* Base style for the main action buttons. */
+        /* Main Action Buttons */
         .main-button {
             width: 100%;
             padding: 15px;
@@ -215,7 +216,7 @@
             transform: scale(0.98);
         }
 
-        /* Another grid, this time for the action buttons. */
+        /* Button Group Layout */
         .button-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -228,18 +229,14 @@
         #refreshButton { background-color: var(--primary-accent); }
         #refreshButton:hover { background-color: var(--primary-hover); }
         
-        /* --- STYLING THE SOPHISTICATED FOOTER --- */
+        /* --- STYLING THE SOPHISTICATED FOOTER (MODIFIED) --- */
         /* Ah, the footer. Forever stuck at the bottom, begging for attention. */
         .page-footer {
-            position: fixed; /* Fixed, so you can never escape its gaze. */
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--container-bg);
-            border-top: 1px solid var(--border-color);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            /* MODIFICADO: A propriedade 'position: fixed' e relacionadas foram removidas. */
             padding: 20px;
-            z-index: 100;
+            margin-top: 40px; /* Adiciona uma distância consistente do container acima. */
+            border-top: 1px solid var(--border-color);
+            background-color: var(--container-bg);
         }
         
         /* The content of the panhandler footer. */
@@ -254,6 +251,22 @@
             margin-bottom: 15px;
             font-size: 0.9em;
         }
+
+        /* Donation Section Layout */
+        .donation-layout {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* BTC QR Code */
+        .btc-qr-code {
+            width: 130px;
+            height: auto;
+            padding: 4px;
+            background-color: white;
+            flex-shrink: 0;
+        }
         
         /* The digital begging bowl. Styled to look professional, of course. */
         .btc-address-container {
@@ -264,6 +277,7 @@
             padding: 12px 15px;
             border: 1px solid var(--border-color);
             gap: 15px;
+            flex-grow: 1; /* Grow to fill space */
         }
         
         .btc-address-container code {
@@ -271,12 +285,12 @@
             color: var(--text-primary);
             font-size: 1em;
             overflow-wrap: break-word;
-            word-break: break-all; /* Ensures the long address doesn't break the layout. */
+            word-break: break-all; /* Prevent overflow */
             text-align: left;
             flex-grow: 1;
         }
 
-        /* The button to copy the wallet address. */
+        /* BTC Copy Button */
         .copy-btc-button {
             display: flex;
             align-items: center;
@@ -307,17 +321,43 @@
         .copy-btc-button .icon-check {
             display: none;
         }
-
         .copy-btc-button.copied {
             background-color: var(--success-color);
         }
-        
         .copy-btc-button.copied .icon-copy {
             display: none;
         }
-        
         .copy-btc-button.copied .icon-check {
             display: block;
+        }
+        
+        /* --- Bitcoin Title & Emoji Styles --- */
+        /* Donation Section Title */
+        .bitcoin-title {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1.1em;
+            margin-bottom: 20px; /* Add space before QR code */
+        }
+        
+        /* Bitcoin Emoji Gradient */
+        .bitcoin-emoji {
+            /* 1. Fallback Color */
+            color: var(--bitcoin-orange);
+            
+            /* 2. The Gradient */
+            background-image: radial-gradient(circle, #ffb64a 0%, #f7931a 80%);
+            
+            /* 3. The Magic (Clip background to text) */
+            -webkit-background-clip: text; /* Vendor prefix for compatibility */
+            background-clip: text;
+            
+            /* 4. The Secret (Make text transparent) */
+            color: transparent;
+            
+            font-weight: bold;
+            font-size: 1.2em; /* Slightly larger to stand out */
+            display: inline-block; /* Ensures gradient is applied correctly */
         }
         
         /* --- RESPONSIVENESS --- */
@@ -325,7 +365,7 @@
         @media (max-width: 600px) {
             body {
                 padding: 10px;
-                padding-bottom: 160px;
+                /* MODIFICADO: Removido o padding-bottom daqui também. */
             }
             .container {
                 padding: 20px;
@@ -340,6 +380,18 @@
             .page-footer {
                 padding: 15px;
             }
+
+            /* Responsive rules for the donation section */
+            .donation-layout {
+                flex-direction: column; /* Stack QR and address vertically */
+                align-items: center;
+                gap: 15px;
+            }
+
+            .btc-address-container {
+                width: 100%; /* Ensure address block takes full width */
+            }
+
             .btc-address-container code {
                 font-size: 0.8em;
             }
@@ -352,7 +404,7 @@
 <div class="container">
     <div class="header">
         <h4>CipherSmith: The world's best password generator</h4>
-        <p>Generate strong, unpredictable passwords with a single click.</p>
+        <p>The world's first generator to forge passwords that are both truly memorable and highly secure.</p>
     </div>
 
     <div class="control-group">
@@ -399,12 +451,17 @@
 <footer class="page-footer">
     <div class="donation-content">
         <p>This is open-source software. Consider supporting its development.</p>
-        <div class="btc-address-container">
-            <code id="btcAddressText">bc1qufnkjqtzckfqlqsakpv3yjjyg0gce2674wdhv04fmjw635vuj9zsgrzuwp</code>
-            <button id="copyBtcButton" class="copy-btc-button" title="Copy address">
-                <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            </button>
+        <p class="bitcoin-title">Support with <span class="bitcoin-emoji">₿</span>itcoin</p>
+        
+        <div class="donation-layout">
+            <img src="qrcode.jpg" alt="BTC Donation QR Code" class="btc-qr-code">
+            <div class="btc-address-container">
+                <code id="btcAddressText">bc1qufnkjqtzckfqlqsakpv3yjjyg0gce2674wdhv04fmjw635vuj9zsgrzuwp</code>
+                <button id="copyBtcButton" class="copy-btc-button" title="Copy address">
+                    <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </button>
+            </div>
         </div>
     </div>
 </footer>
@@ -446,5 +503,4 @@
 </script>
 
 </body>
-
 </html>
