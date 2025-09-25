@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <style>
+        /* Summoning fonts from the great cloud spirit, also known as Google. */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+        /* :root - Where we define the color variables. The palette.
+           Rumor has it, this was inspired by a certain Russian antivirus.
+           It used to be secure, but now... who knows? */
+        :root {
+            --bg-light: #f5f5f5; /* The color of the void, the page background. */
+            --container-bg: #ffffff; /* The pure white where the "magic" happens. */
+            --primary-accent: #009c82; /* The main color. Green, because they say it inspires trust. Fools. */
+            --primary-hover: #007f6a; /* A slightly darker green for when the mouse dares to hover. */
+            --success-color: #007f6a; /* The color of "success". Or whatever we call success these days. */
+            --text-primary: #222222; /* For the text that actually matters. */
+            --text-secondary: #666666; /* For text that matters a little less, like this comment. */
+            --border-color: #e0e0e0; /* The color of the fences that separate the elements. */
+            --output-bg: #f0f2f5; /* A slightly different background for the generated password, to make it feel special. */
+            --button-secondary-bg: #333333; /* The copy button. Dark, like the intentions of those who copy. */
+            --button-secondary-hover: #444444; /* A little less dark for when you hesitate before clicking. */
+        }
+
+        /* The great equalizer. Forcing all elements to follow the same basic rules. A tiny tyrant. */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* The body of the page. The canvas for our... masterpiece.
+           We add padding at the bottom so the footer doesn't get too needy. */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            padding: 20px;
+            padding-bottom: 140px; 
+        }
+
+        /* The main "box" where everything happens.
+           We give it a shadow to make it look like it's floating. All modern things must float. */
+        .container {
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+            max-width: 550px;
+            width: 100%;
+            border-top: 4px solid var(--primary-accent); /* A top border to give it an air of importance. */
+            margin: 20px auto;
+        }
+
+        /* The header. The part that shouts at the user what this thing does. */
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h4 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Control group. Keeping related elements together before they start feuding. */
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-group label.group-label {
+            font-size: 1rem;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        /* Aligns the inputs and the increment/decrement buttons. */
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Styling the number fields. Giving them a specific look. */
+        .password-length, .serial-count {
+            width: 70px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1.1em;
+            padding: 8px;
+            margin-right: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        /* Focus effect. So the user knows where their digital soul is interacting. */
+        .password-length:focus, .serial-count:focus {
+            outline: none;
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(0, 156, 130, 0.15);
+        }
+        
+        /* Container for the plus/minus buttons and the slider. */
+        .increment-decrement {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; /* Makes it take up the remaining space. Greedy. */
+        }
+        
+        /* The + and - buttons. For those too lazy to type. */
+        .increment-decrement button {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.2s;
+            border-radius: 50%; /* Round, because the world has enough sharp corners. */
+        }
+        .increment-decrement button:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* The range slider. For those who prefer to express their desires with a vague sliding motion. */
+        input[type="range"] {
+            -webkit-appearance: none; /* Removes the default browser style. We hate the default. */
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            outline: none;
+            border-radius: 3px;
+            margin: 0 15px;
+        }
+
+        /* The little nub you drag on the slider. */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-accent);
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        /* Makes the nub grow a bit on hover, to stroke the user's ego. */
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        /* A grid for the checkboxes. Organizing the promises. */
+        .checkbox-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .checkbox-container label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+        
+        .checkbox-container input {
+            margin-right: 10px;
+            height: 1.3em;
+            width: 1.3em;
+            accent-color: var(--primary-accent); /* Tints the checkmark with our color of trust. */
+        }
+        
+        /* Where the generated password will be displayed. The stage for the great reveal. */
+        .output-container {
+            margin-top: 30px;
+        }
+
+        #generatedPassword {
+            font-size: 1.2rem;
+            font-family: 'Courier New', Courier, monospace; /* Font for a 90s movie hacker. */
+            padding: 15px;
+            background-color: var(--output-bg);
+            border-radius: 6px;
+            word-wrap: break-word; /* For the ridiculously long password you might create. */
+            white-space: pre-wrap;
+            min-height: 50px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        /* Base style for the main action buttons. */
+        .main-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        /* A little click effect, to give the illusion that something important happened. */
+        .main-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Another grid, this time for the action buttons. */
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        #copyButton { background-color: var(--button-secondary-bg); }
+        #copyButton:hover { background-color: var(--button-secondary-hover); }
+
+        #refreshButton { background-color: var(--primary-accent); }
+        #refreshButton:hover { background-color: var(--primary-hover); }
+        
+        /* --- STYLING THE SOPHISTICATED FOOTER --- */
+        /* Ah, the footer. Forever stuck at the bottom, begging for attention. */
+        .page-footer {
+            position: fixed; /* Fixed, so you can never escape its gaze. */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--container-bg);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            z-index: 100;
+        }
+        
+        /* The content of the panhandler footer. */
+        .donation-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .donation-content p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        /* The digital begging bowl. Styled to look professional, of course. */
+        .btc-address-container {
+            display: flex;
+            align-items: center;
+            background: var(--output-bg);
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            gap: 15px;
+        }
+        
+        .btc-address-container code {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-primary);
+            font-size: 1em;
+            overflow-wrap: break-word;
+            word-break: break-all; /* Ensures the long address doesn't break the layout. */
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        /* The button to copy the wallet address. */
+        .copy-btc-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-accent);
+            border: none;
+            border-radius: 6px;
+            width: 40px; 
+            height: 40px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .copy-btc-button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .copy-btc-button svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        
+        /* --- COPY ICON STATES --- */
+        /* The little dance of the icons to show that the copy worked. */
+        .copy-btc-button .icon-check {
+            display: none;
+        }
+
+        .copy-btc-button.copied {
+            background-color: var(--success-color);
+        }
+        
+        .copy-btc-button.copied .icon-copy {
+            display: none;
+        }
+        
+        .copy-btc-button.copied .icon-check {
+            display: block;
+        }
+        
+        /* --- RESPONSIVENESS --- */
+        /* A whisper to the browser: "If the screen is small, don't panic. Just... stack everything." */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+                padding-bottom: 160px;
+            }
+            .container {
+                padding: 20px;
+                margin-top: 10px;
+            }
+            .header h4 {
+                font-size: 1.5rem;
+            }
+            .checkbox-container, .button-group {
+                grid-template-columns: 1fr; /* Goodbye, columns. Hello, stack. */
+            }
+            .page-footer {
+                padding: 15px;
+            }
+            .btc-address-container code {
+                font-size: 0.8em;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h4>CipherSmith: The world's best password generator</h4>
+        <p>Generate strong, unpredictable passwords with a single click.</p>
+    </div>
+
+    <div class="control-group">
+        <label for="passwordLength" class="group-label">Password Length:</label>
+        <div class="input-group">
+            <input type="number" id="passwordLength" class="password-length" value="13" min="6" max="128">
+            <div class="increment-decrement">
+                <button onclick="pg_decrement('passwordLength')">-</button>
+                <input type="range" id="lengthSlider" min="6" max="128" value="13">
+                <button onclick="pg_increment('passwordLength')">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label for="serialCount" class="group-label">Number of Passwords:</label>
+        <div class="input-group">
+            <input type="number" id="serialCount" class="serial-count" value="1" min="1" max="99">
+            <div class="increment-decrement">
+                <button onclick="pg_decrement('serialCount')">-</button>
+                <input type="range" id="countSlider" min="1" max="99" value="1">
+                <button onclick="pg_increment('serialCount')">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="group-label">Options:</label>
+        <div class="checkbox-container">
+            <label><input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)</label>
+            <label><input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)</label>
+            <label><input type="checkbox" id="includeNumbers" checked> Numbers (0-9)</label>
+            <label><input type="checkbox" id="includeSymbols" checked> Symbols (@#$)</label>
+            <label><input type="checkbox" id="memorableCheckbox" checked> Memorable</label>
+        </div>
+    </div>
+    <div class="output-container">
+        <div id="generatedPassword"></div>
+    </div>
+    <div class="button-group">
+        <button class="main-button" id="copyButton">Copy</button>
+        <button class="main-button" id="refreshButton">Generate</button>
+    </div>
+</div>
+
+<footer class="page-footer">
+    <div class="donation-content">
+        <p>This is open-source software. Consider supporting its development.</p>
+        <div class="btc-address-container">
+            <code id="btcAddressText">bc1qufnkjqtzckfqlqsakpv3yjjyg0gce2674wdhv04fmjw635vuj9zsgrzuwp</code>
+            <button id="copyBtcButton" class="copy-btc-button" title="Copy address">
+                <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </button>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- BTC Address Copy Logic ---
+        const copyBtcBtn = document.getElementById('copyBtcButton');
+        const btcAddress = document.getElementById('btcAddressText');
+
+        copyBtcBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(btcAddress.textContent).then(() => {
+                copyBtcBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtcBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy address: ', err);
+                alert('Could not copy the address.');
+            });
+        });
+
+        // --- Core Page Logic ---
+        // This connects the number input and the slider so they always show the same value.
+        syncValue(document.getElementById('passwordLength'), document.getElementById('lengthSlider'));
+        syncValue(document.getElementById('serialCount'), document.getElementById('countSlider'));
+        
+        // This assigns the generatePasswords function ONLY to the click of the 'Generate' button.
+        document.getElementById('refreshButton').addEventListener('click', generatePasswords);
+
+        // Assigns the copy function to the 'Copy' button.
+        document.getElementById('copyButton').addEventListener('click', copyPasswords);
+        
+        // Initial password generation on page load.
+        generatePasswords(); 
+    });
+</script>
+
+</body>
+</html>
