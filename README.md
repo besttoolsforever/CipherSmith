@@ -1,10 +1,3 @@
-# CipherSmith 🔑✨
-
-![Version](https://img.shields.io/badge/version-25.0-brightgreen.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Status](https://img.shields.io/badge/status-stable-success.svg)
-
-Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and highly secure**, without sacrificing your length requirements.
 ```
    _____ _       _               _____           _ _   _     
   / ____(_)     | |             / ____|         (_) | | |    
@@ -15,6 +8,14 @@ Welcome to CipherSmith, the world's first generator designed to forge passwords 
           | |                                                
           |_|                                                                                                  
 ```
+# CipherSmith 🔑✨
+
+![Version](https://img.shields.io/badge/version-25.0-brightgreen.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Status](https://img.shields.io/badge/status-stable-success.svg)
+
+Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and highly secure**, without sacrificing your length requirements.
+
 <p align="center">
   <img src="CipherSmith.gif" alt="CipherSmith in Action" width="40%">
 </p>
