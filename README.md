@@ -23,7 +23,7 @@ Welcome to CipherSmith, the world's first generator designed to forge passwords 
 ---
 ### 📂 File Structure
 
-CipherSmith/
+``` CipherSmith/
 ├── LICENSE           # The important legal stuff (MIT License)
 ├── README.md         # You are here! The project's manual 👋
 ├── index.html        # The main application file (The stage)
@@ -33,7 +33,7 @@ CipherSmith/
 │   └── ...
 └── 2.0/              # Archived & obsolete files from v2.0
 └── ...
-
+```
 ### 🤔 Our Philosophy: Not Your Average Passphrase Generator
 
 Let's get one thing straight: CipherSmith is **not** a passphrase generator.
