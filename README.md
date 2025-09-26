@@ -57,7 +57,7 @@ If you want to run the project on your own machine:
 1.  Clone or download this repository.
 2.  Open the `index.html` file in your favorite browser.
 3.  That's it! Start forging some awesome passwords.
-4.  
+ 
 ---
 
 ### 🤝 Contributing
@@ -76,20 +76,26 @@ This is an open-source project created with love. If CipherSmith has saved you f
 
 ### 📜 License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project's source code is licensed under the MIT License. See the `LICENSE` file for details. Note that third-party components have their own licenses as described below.
+
+---
 
 ### 🙏 Acknowledgements & Third-Party Magic ✨
-CipherSmith is a powerful tool, and its strength comes from standing on the shoulders of giants in the open-source community. We want to give a huge shout-out to these amazing projects that make our password-forging magic possible!
 
-The Wordlist 🧠
-Our "Memorable" mode is powered by the fantastic **[Google 10,000 English words list](https://github.com/first20hours/google-10000-english)** curated by `first20hours`. Using the most common words in American English is our secret sauce for creating passwords that are surprisingly easy to recall!
+CipherSmith is a powerful tool, and its strength comes from standing on the shoulders of giants. Here's a shout-out to the amazing projects that make our password-forging magic possible!
 
-And don't worry, if you're offline or GitHub is taking a nap, we've got a built-in local wordlist so CipherSmith is always ready to go. Offline-first for the win! 🏆
+#### The Wordlist & Its License 🧠
+
+Our "Memorable" mode is powered by the fantastic **[Google 10,000 English words list](https://github.com/first20hours/google-10000-english)** curated by `first20hours`.
+
+It's important to know that this data file has a custom license that recommends it for educational and personal use, but advises against commercial use. Therefore, **if you plan to modify, redistribute, or sell a product based on CipherSmith, we strongly recommend you replace the wordlist** with one that has a clear commercial license.
+
+And don't worry, if you're offline or GitHub is taking a nap, we've got a built-in local fallback list so CipherSmith is always ready to go. Offline-first for the win! 🏆
 
 #### The Strength Meter 💪
 
-Ever wonder how we calculate that "time to crack"? That's the incredible work of the **[zxcvbn library](https://github.com/dropbox/zxcvbn)**, originally developed by the brilliant minds at Dropbox.
+Ever wonder how we calculate that "time to crack"? That's the incredible work of the **[zxcvbn library](https://github.com/dropbox/zxcvbn)** from Dropbox, which is distributed under the permissive **MIT License**.
 
-This powerful library goes way beyond simple character counting. It recognizes common patterns, names, and dictionary words to give you a realistic, actionable estimate of your password's strength. It's the reason our feedback is so smart!
+This powerful library goes way beyond simple character counting to give you a realistic estimate of your password's strength. It's the reason our feedback is so smart!
 
 A huge thank you to these developers for sharing their work with the world! ❤️
