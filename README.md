@@ -5,12 +5,33 @@
 ![Status](https://img.shields.io/badge/status-stable-success.svg)
 
 Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and highly secure**, without sacrificing your length requirements.
+  _____  _         _                   _____             _  _    _
+ / ____|(_)       | |                 / ____|           (_)| |  | |
+| |      _  _ __  | |__    ___  _ __ | (___   _ __ ___   _ | |_ | |__
+| |     | || '_ \ | '_ \  / _ \| '__| \___ \ | '_ ` _ \ | || __|| '_ \
+| |____ | || |_) || | | ||  __/| |    ____) || | | | | || || |_ | | | |
+ \_____||_|| .__/ |_| |_| \___||_|   |_____/ |_| |_| |_||_| \__||_| |_|
+           | |
+           |_|
 
 <p align="center">
   <img src="CipherSmith.gif" alt="CipherSmith in Action" width="40%">
 </p>
 
 ---
+### 📂 File Structure
+
+Here's a look at the project's layout. Only the files in the root directory are needed for the latest version to work.
+CipherSmith/
+├── LICENSE           # The important legal stuff (MIT License)
+├── README.md         # You are here! The project's manual 👋
+├── index.html        # The main application file (The stage)
+├── script.js         # The core logic and magic (The wizard behind the curtain)
+├── qrcode.jpg        # The aesthetic stuff (BTC donation QR code)
+├── 1.0/              # Archived & obsolete files from v1.0
+│   └── ...
+└── 2.0/              # Archived & obsolete files from v2.0
+└── ...
 
 ### 🤔 Our Philosophy: Not Your Average Passphrase Generator
 
