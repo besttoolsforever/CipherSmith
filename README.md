@@ -7,7 +7,7 @@
 Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and highly secure**, without sacrificing your length requirements.
 
 <p align="center">
-  <img src="CipherSmith.gif" alt="CipherSmith in Action">
+  <img src="CipherSmith.gif" alt="CipherSmith in Action" width="50%">
 </p>
 
 ---
@@ -44,12 +44,20 @@ Traditional passphrase tools give you a string of words, and you're stuck with w
 
 ### 🚀 How to Use
 
-It couldn't be simpler. Since this is a pure front-end application:
+#### Direct Access (Easiest Way) 🖱️
+
+Simply click the link below to use CipherSmith directly in your browser, powered by GitHub Pages:
+
+👉 **[Use CipherSmith Now!](https://besttoolsforever.github.io/CipherSmith/index.html/)**
+
+#### Local Use (For Developers) 💻
+
+If you want to run the project on your own machine:
 
 1.  Clone or download this repository.
 2.  Open the `index.html` file in your favorite browser.
 3.  That's it! Start forging some awesome passwords.
-
+4.  
 ---
 
 ### 🤝 Contributing
