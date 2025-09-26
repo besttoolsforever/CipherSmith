@@ -1,3 +1,5 @@
+
+# CipherSmith 🔑✨
 ```
    _____ _       _               _____           _ _   _     
   / ____(_)     | |             / ____|         (_) | | |    
@@ -8,7 +10,6 @@
           | |                                                
           |_|                                                                                                  
 ```
-# CipherSmith 🔑✨
 
 ![Version](https://img.shields.io/badge/version-25.0-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
