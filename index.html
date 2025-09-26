@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherSmith: The World's Best Password Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        :root {
+            --bg-light: #f5f5f5;
+            --container-bg: #ffffff;
+            --primary-accent: #009c82;
+            --primary-hover: #007f6a;
+            --text-primary: #222222;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --output-bg: #f0f2f5;
+            --button-secondary-bg: #333333;
+            --button-secondary-hover: #444444;
+            /* Strength Bar Colors */
+            --strength-0: #d9534f; /* Weak Red */
+            --strength-1: #d9534f; /* Weak Red */
+            --strength-2: #f0ad4e; /* Fair Orange */
+            --strength-3: #5bc0de; /* Good Blue */
+            --strength-4: #5cb85c; /* Strong Green */
+            --bitcoin-orange: #f7931a;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            padding: 20px;
+        }
+        .container {
+            background: var(--container-bg); padding: 40px; border-radius: 8px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1); max-width: 550px;
+            width: 100%; border-top: 4px solid var(--primary-accent); margin: 20px auto;
+        }
+        .header { text-align: center; margin-bottom: 35px; }
+        .header h4 { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; }
+        .header p { font-size: 1rem; color: var(--text-secondary); }
+        .control-group { margin-bottom: 25px; }
+        .control-group label.group-label { font-size: 1rem; font-weight: 500; display: block; margin-bottom: 12px; }
+        .input-group { display: flex; align-items: center; }
+        .password-length, .serial-count {
+            width: 70px; text-align: center; border: 1px solid var(--border-color);
+            border-radius: 6px; font-size: 1.1em; padding: 8px; margin-right: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .password-length:focus, .serial-count:focus {
+            outline: none; border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(0, 156, 130, 0.15);
+        }
+        .increment-decrement { display: flex; align-items: center; flex-grow: 1; }
+        .increment-decrement button {
+            width: 32px; height: 32px; border: 1px solid var(--border-color); background: #fff;
+            color: var(--text-secondary); cursor: pointer; font-size: 1.2em;
+            transition: background-color 0.2s; border-radius: 50%;
+        }
+        .increment-decrement button:hover { background-color: #f1f1f1; }
+        input[type="range"] {
+            -webkit-appearance: none; width: 100%; height: 6px; background: #e9ecef;
+            outline: none; border-radius: 3px; margin: 0 15px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; width: 20px; height: 20px;
+            background: var(--primary-accent); cursor: pointer; border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+        .checkbox-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .checkbox-container label { display: flex; align-items: center; cursor: pointer; font-size: 0.95em; }
+        .checkbox-container input { margin-right: 10px; height: 1.3em; width: 1.3em; accent-color: var(--primary-accent); }
+        .output-container { margin-top: 30px; }
+        #generatedPassword {
+            font-size: 1.2rem; font-family: 'Courier New', Courier, monospace; padding: 15px;
+            background-color: var(--output-bg); border-radius: 6px; word-wrap: break-word;
+            white-space: pre-wrap; min-height: 50px; border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .strength-meter { margin-top: 15px; }
+        .strength-bar-container {
+            width: 100%; background-color: #e9ecef; border-radius: 4px;
+            height: 8px; overflow: hidden;
+        }
+        .strength-bar {
+            height: 100%; width: 0%; border-radius: 4px;
+            transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+        .strength-bar.strength-0 { background-color: var(--strength-0); }
+        .strength-bar.strength-1 { background-color: var(--strength-1); }
+        .strength-bar.strength-2 { background-color: var(--strength-2); }
+        .strength-bar.strength-3 { background-color: var(--strength-3); }
+        .strength-bar.strength-4 { background-color: var(--strength-4); }
+        #strengthFeedback, #strengthTime {
+            font-size: 0.85rem; color: var(--text-secondary);
+            margin-top: 8px; text-align: center; height: 1.2em;
+        }
+        #strengthTime { font-weight: 500; }
+        .button-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+        .main-button {
+            width: 100%; padding: 15px; border: none; border-radius: 6px; color: white;
+            cursor: pointer; font-size: 1.1em; font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .main-button:active { transform: scale(0.98); }
+        #copyButton { background-color: var(--button-secondary-bg); }
+        #copyButton:hover { background-color: var(--button-secondary-hover); }
+        #refreshButton { background-color: var(--primary-accent); }
+        #refreshButton:hover { background-color: var(--primary-hover); }
+        .page-footer {
+            padding: 20px; margin-top: 40px; border-top: 1px solid var(--border-color);
+            background-color: var(--container-bg);
+        }
+        .donation-content { max-width: 700px; margin: 0 auto; text-align: center; }
+        .donation-content p { color: var(--text-secondary); margin-bottom: 15px; font-size: 0.9em; }
+        .donation-layout { display: flex; align-items: center; gap: 20px; }
+        .btc-qr-code { width: 130px; height: auto; padding: 4px; background-color: white; flex-shrink: 0; }
+        .btc-address-container {
+            display: flex; align-items: center; background: var(--output-bg); border-radius: 8px;
+            padding: 12px 15px; border: 1px solid var(--border-color); gap: 15px; flex-grow: 1;
+        }
+        .btc-address-container code {
+            font-family: 'Courier New', Courier, monospace; color: var(--text-primary);
+            font-size: 1em; overflow-wrap: break-word; word-break: break-all;
+            text-align: left; flex-grow: 1;
+        }
+        .copy-btc-button {
+            display: flex; align-items: center; justify-content: center; background-color: var(--primary-accent);
+            border: none; border-radius: 6px; width: 40px; height: 40px;
+            cursor: pointer; transition: background-color 0.2s; flex-shrink: 0;
+        }
+        .copy-btc-button:hover { background-color: var(--primary-hover); }
+        .copy-btc-button svg { width: 18px; height: 18px; fill: white; }
+        .bitcoin-title { color: var(--text-primary); font-weight: 500; font-size: 1.1em; margin-bottom: 20px; }
+        .bitcoin-emoji {
+            color: var(--bitcoin-orange); background-image: radial-gradient(circle, #ffb64a 0%, #f7931a 80%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            font-weight: bold; font-size: 1.2em; display: inline-block;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            .checkbox-container, .button-group { grid-template-columns: 1fr; }
+            .donation-layout { flex-direction: column; align-items: center; gap: 15px; }
+            .btc-address-container { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h4>CipherSmith: The world's best password generator</h4>
+        <p>The world's first generator to forge passwords that are both truly memorable and highly secure.</p>
+    </div>
+
+    <div class="control-group">
+        <label for="passwordLength" class="group-label">Password Length:</label>
+        <div class="input-group">
+            <input type="number" id="passwordLength" class="password-length" value="16" min="6" max="128">
+            <div class="increment-decrement">
+                <button onclick="pg_decrement('passwordLength')">-</button>
+                <input type="range" id="lengthSlider" min="6" max="128" value="16">
+                <button onclick="pg_increment('passwordLength')">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label for="serialCount" class="group-label">Number of Passwords:</label>
+        <div class="input-group">
+            <input type="number" id="serialCount" class="serial-count" value="1" min="1" max="99">
+            <div class="increment-decrement">
+                <button onclick="pg_decrement('serialCount')">-</button>
+                <input type="range" id="countSlider" min="1" max="99" value="1">
+                <button onclick="pg_increment('serialCount')">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="group-label">Options:</label>
+        <div class="checkbox-container">
+            <label><input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)</label>
+            <label><input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)</label>
+            <label><input type="checkbox" id="includeNumbers" checked> Numbers (0-9)</label>
+            <label><input type="checkbox" id="includeSymbols" checked> Symbols (@#$)</label>
+            <label><input type="checkbox" id="memorableCheckbox" checked> Memorable</label>
+        </div>
+    </div>
+    <div class="output-container">
+        <div id="generatedPassword"></div>
+        <div class="strength-meter">
+            <div class="strength-bar-container">
+                <div id="strengthBar" class="strength-bar"></div>
+            </div>
+            <p id="strengthFeedback"></p>
+            <p id="strengthTime"></p>
+        </div>
+    </div>
+    <div class="button-group">
+        <button class="main-button" id="copyButton">Copy</button>
+        <button class="main-button" id="refreshButton">Generate</button>
+    </div>
+</div>
+
+<footer class="page-footer">
+    <div class="donation-content">
+        <p>This is open-source software. Consider supporting its development.</p>
+        <p class="bitcoin-title">Support with <span class="bitcoin-emoji">₿</span>itcoin</p>
+        <div class="donation-layout">
+            <img src="https://raw.githubusercontent.com/BestToolsForever/CipherSmith/main/qrcode.jpg" alt="BTC Donation QR Code" class="btc-qr-code">
+            <div class="btc-address-container">
+                <code id="btcAddressText">bc1qufnkjqtzckfqlqsakpv3yjjyg0gce2674wdhv04fmjw635vuj9zsgrzuwp</code>
+                <button id="copyBtcButton" class="copy-btc-button" title="Copy address">
+                    <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Sync the number inputs with the sliders
+        syncValue(document.getElementById('passwordLength'), document.getElementById('lengthSlider'));
+        syncValue(document.getElementById('serialCount'), document.getElementById('countSlider'));
+        
+        // Assign functions to buttons
+        document.getElementById('refreshButton').addEventListener('click', generatePasswords);
+        document.getElementById('copyButton').addEventListener('click', copyPasswords);
+        
+        // Logic for the BTC address copy button
+        const copyBtcBtn = document.getElementById('copyBtcButton');
+        if(copyBtcBtn) {
+            copyBtcBtn.addEventListener('click', () => {
+                const btcAddress = document.getElementById('btcAddressText').textContent;
+                navigator.clipboard.writeText(btcAddress).then(() => {
+                    alert('Bitcoin address copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy address: ', err);
+                });
+            });
+        }
+        
+        // Generate the first password on page load
+        generatePasswords(); 
+    });
+</script>
+
+</body>
+</html>
