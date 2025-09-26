@@ -7,7 +7,7 @@
 Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and highly secure**, without sacrificing your length requirements.
 
 <p align="center">
-  <img src="CipherSmith.png" alt="CipherSmith in Action">
+  <img src="CipherSmith.gif" alt="CipherSmith in Action">
 </p>
 
 ---
