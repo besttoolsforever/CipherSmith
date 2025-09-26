@@ -145,6 +145,17 @@
             .checkbox-container, .button-group { grid-template-columns: 1fr; }
             .donation-layout { flex-direction: column; align-items: center; gap: 15px; }
             .btc-address-container { width: 100%; }
+
+            /* --- CORREÇÕES PARA O RODAPÉ NO MOBILE --- */
+            .donation-content p {
+                font-size: 0.9rem; /* Ajusta o parágrafo geral para um tamanho mais consistente */
+            }
+            .bitcoin-title {
+                font-size: 1.0rem; /* Controla o tamanho do título com Bitcoin para evitar que fique muito grande */
+            }
+            .btc-address-container code {
+                font-size: 0.85rem; /* Reduz um pouco o endereço de BTC para caber melhor */
+            }
         }
     </style>
 </head>
