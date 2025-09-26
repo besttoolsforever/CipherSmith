@@ -5,15 +5,16 @@
 ![Status](https://img.shields.io/badge/status-stable-success.svg)
 
 Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and highly secure**, without sacrificing your length requirements.
-  _____  _         _                   _____             _  _    _
- / ____|(_)       | |                 / ____|           (_)| |  | |
-| |      _  _ __  | |__    ___  _ __ | (___   _ __ ___   _ | |_ | |__
-| |     | || '_ \ | '_ \  / _ \| '__| \___ \ | '_ ` _ \ | || __|| '_ \
-| |____ | || |_) || | | ||  __/| |    ____) || | | | | || || |_ | | | |
- \_____||_|| .__/ |_| |_| \___||_|   |_____/ |_| |_| |_||_| \__||_| |_|
-           | |
-           |_|
-
+```
+   _____ _       _               _____           _ _   _     
+  / ____(_)     | |             / ____|         (_) | | |    
+ | |     _ _ __ | |__   ___ _ _| (___  _ __ ___  _| |_| |__  
+ | |    | | '_ \| '_ \ / _ \ '__\___ \| '_ ` _ \| | __| '_ \ 
+ | |____| | |_) | | | |  __/ |  ____) | | | | | | | |_| | | |
+  \_____|_| .__/|_| |_|\___|_| |_____/|_| |_| |_|_|\__|_| |_|
+          | |                                                
+          |_|                                                                                                  
+```
 <p align="center">
   <img src="CipherSmith.gif" alt="CipherSmith in Action" width="40%">
 </p>
