@@ -115,7 +115,7 @@
             background-color: var(--container-bg);
         }
         .donation-content { max-width: 700px; margin: 0 auto; text-align: center; }
-        .donation-content p { color: var(--text-secondary); margin-bottom: 15px; font-size: 0.9em; }
+        .donation-content p { color: var(--text-secondary); margin-bottom: 15px; font-size: 1rem; line-height: 1.5; }
         .donation-layout { display: flex; align-items: center; gap: 20px; }
         .btc-qr-code { width: 130px; height: auto; padding: 4px; background-color: white; flex-shrink: 0; }
         .btc-address-container {
@@ -134,27 +134,30 @@
         }
         .copy-btc-button:hover { background-color: var(--primary-hover); }
         .copy-btc-button svg { width: 18px; height: 18px; fill: white; }
-        .bitcoin-title { color: var(--text-primary); font-weight: 500; font-size: 1.1em; margin-bottom: 20px; }
+        .bitcoin-title { color: var(--text-primary); font-weight: 500; font-size: 1.2rem; margin-bottom: 20px; }
+        
+        /* --- EMOJI BITCOIN --- */
         .bitcoin-emoji {
-            color: var(--bitcoin-orange); background-image: radial-gradient(circle, #ffb64a 0%, #f7931a 80%);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            font-weight: bold; font-size: 1.2em; display: inline-block;
+            color: var(--bitcoin-orange);
+            font-weight: bold;
+            font-size: 1.2em;
         }
+
         @media (max-width: 600px) {
             .container { padding: 20px; }
             .checkbox-container, .button-group { grid-template-columns: 1fr; }
             .donation-layout { flex-direction: column; align-items: center; gap: 15px; }
             .btc-address-container { width: 100%; }
 
-            /* --- CORREÇÕES PARA O RODAPÉ NO MOBILE --- */
+            /* ---  MOBILE --- */
             .donation-content p {
-                font-size: 0.9rem; /* Ajusta o parágrafo geral para um tamanho mais consistente */
+                font-size: 0.9rem; /*  */
             }
             .bitcoin-title {
-                font-size: 1.0rem; /* Controla o tamanho do título com Bitcoin para evitar que fique muito grande */
+                font-size: 1.0rem; /* */
             }
             .btc-address-container code {
-                font-size: 0.85rem; /* Reduz um pouco o endereço de BTC para caber melhor */
+                font-size: 0.85rem; /*  */
             }
         }
     </style>
