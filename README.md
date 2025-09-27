@@ -47,13 +47,6 @@ This project was built with a clear mission: to solve a practical problem that m
 
 ---
 
-### 🛠️ How We're Different: Not a Passphrase Generator
-
-Traditional passphrase tools give you a string of words, and you're stuck with whatever length that creates. We thought that was... well, annoying.
-
-CipherSmith is different. Our "Memorable" mode intelligently builds a password from a massive wordlist that **perfectly fits the character length you need**, then cleverly sprinkles in numbers and symbols. The result? A password you can actually remember that still meets those pesky "must be 16 characters long" requirements. It's the best of both worlds!
----
-
 ### 🎉 Features
 
 * **🛡️ Cryptographically Secure:** We use `window.crypto` for all random generation. No `Math.random()` nonsense here! Your passwords are as unpredictable as they get.
