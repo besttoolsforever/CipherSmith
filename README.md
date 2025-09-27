@@ -35,12 +35,23 @@ Welcome to CipherSmith, the world's first generator designed to forge passwords 
 └── 2.0/              # Archived & obsolete files from v2.0
 └── ...
 ```
-### 🤔 Our Philosophy: Not Your Average Passphrase Generator
+### 🤔 The Solution, and a Few Words from the Developer
 
-Let's get one thing straight: CipherSmith is **not** a passphrase generator.
+This project was built with a clear mission: to solve a practical problem that most password generators ignore.
 
-Traditional passphrase tools give you a string of words, and you're stuck with whatever length that creates. We thought that was... well, annoying. CipherSmith is different. Our "Memorable" mode intelligently builds a password from a massive wordlist that **perfectly fits the character length you need**, then cleverly sprinkles in numbers and symbols. The result? A password you can actually remember that still meets those pesky "must be 16 characters long" requirements. It's the best of both worlds!
+> "I've always disliked password generators because they never built what I actually needed. As a user, and especially after years in IT support, I needed passwords that were not only secure but also easy to memorize or type by hand.
+>
+> Whether it was for a client's Wi-Fi setup or their first email account, I constantly had to manually enter impossible-to-type passwords. I built CipherSmith to solve that exact frustration: to forge passwords that are finally both secure and practical for the real world."
+>
+> — *The Developer*
 
+---
+
+### 🛠️ How We're Different: Not a Passphrase Generator
+
+Traditional passphrase tools give you a string of words, and you're stuck with whatever length that creates. We thought that was... well, annoying.
+
+CipherSmith is different. Our "Memorable" mode intelligently builds a password from a massive wordlist that **perfectly fits the character length you need**, then cleverly sprinkles in numbers and symbols. The result? A password you can actually remember that still meets those pesky "must be 16 characters long" requirements. It's the best of both worlds!
 ---
 
 ### 🎉 Features
