@@ -35,15 +35,15 @@ Welcome to CipherSmith, the world's first generator designed to forge passwords 
 └── 2.0/              # Archived & obsolete files from v2.0
 └── ...
 ```
-### 🤔 The Solution, and a Few Words from the Developer
+### 🤔 The Solution
 
-This project was built with a clear mission: to solve a practical problem that most password generators ignore.
+This project was created with a clear objective: to address a common gap found in most password generators.
 
-> "I've always disliked password generators because they never built what I actually needed. As a user, and especially after years in IT support, I needed passwords that were not only secure but also easy to memorize or type by hand.
->
-> Whether it was for a client's Wi-Fi setup or their first email account, I constantly had to manually enter impossible-to-type passwords. I built CipherSmith to solve that exact frustration: to forge passwords that are finally both secure and practical for the real world."
->
-> — *The Developer*
+Many existing tools prioritize complexity, but often fail to deliver passwords that are practical for everyday use. The result is strings that may be highly secure, yet difficult to memorize, type by hand, or apply in real-world contexts.
+
+CipherSmith was designed to bridge this gap. It provides passwords that balance both security and usability — strong enough to protect sensitive accounts, yet simple enough to be typed manually in situations such as configuring Wi-Fi networks or setting up new email accounts.
+
+The core principle is straightforward: generate passwords that are not only safe, but also practical.
 
 ---
 
