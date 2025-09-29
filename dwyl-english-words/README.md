@@ -1,23 +1,16 @@
-List Of English Words
-=============
+# English Word List (`words_alpha.txt`)
 
-A text file containing over 466k English words.
+This directory contains the `words_alpha.txt` data file, which acts as the local, offline wordlist for the **CipherSmith** project. 
 
-While searching for a list of english words (for an auto-complete tutorial)
-I found: https://stackoverflow.com/questions/2213607/how-to-get-english-language-word-database which refers to [https://www.infochimps.com/datasets/word-list-350000-simple-english-words-excel-readable](https://web.archive.org/web/20131118073324/https://www.infochimps.com/datasets/word-list-350000-simple-english-words-excel-readable) (archived).
+It serves as a reliable fallback to the primary online dictionary, ensuring that the "Memorable Mode" is always functional, even without an internet connection.
 
-No idea why infochimps put the word list inside an excel (.xls) file.
+### Asset Details
 
-I pulled out the words into a simple new-line-delimited text file.
-Which is more useful when building apps or importing into databases etc.
+* **Source Repository:** [https://github.com/dwyl/english-words](https://github.com/dwyl/english-words)
+* **License:** The Unlicense (Public Domain). This allows for unrestricted use for any purpose.
+* **Role in Project:** To provide a reliable, offline word source for generating memorable passwords.
 
-Copyright still belongs to them.
+### Directory Contents
 
-Files you may be interested in:
-
--  [words.txt](words.txt) contains all words.
--  [words_alpha.txt](words_alpha.txt) contains only [[:alpha:]] words (words that only have letters, no numbers or symbols). If you want a quick solution choose this.
--  [words_dictionary.json](words_dictionary.json) contains all the words from words_alpha.txt as json format. 
-If you are using Python, you can easily load this file and use it as a dictionary for faster performance. All the words are assigned with 1 in the dictionary.
-
-See [read_english_dictionary.py](read_english_dictionary.py) for example usage.
+* `words_alpha.txt`: The main wordlist file, containing only alphabetic characters (`[a-zA-Z]`).
+* `LICENSE.md`: A copy of the original license from the source repository.
