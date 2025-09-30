@@ -1,8 +1,8 @@
-// CipherSmith v25.0 (Final Documented Version)
+// CipherSmith v26.0
 
 // --- GLOBALS ---
 const wordList_dev = [
-     "nebula", "photon", "hyper", "terra", "lunar", "solar", "galaxy", "cosmic", "velocity", "momentum",
+    "nebula", "photon", "hyper", "terra", "lunar", "solar", "galaxy", "cosmic", "velocity", "momentum",
     "dynamic", "atomic", "quantum", "neutron", "proton", "electron", "fusion", "gravity", "orbit", "celestial",
     "stardust", "blazar", "pulsar", "quasar", "ionize", "spectral", "thermal", "accel", "turbo", "zenith",
     "nadir", "apex", "vertex", "crystal", "prismatic", "luminous", "radiant", "infinity", "eternity", "abyss",
@@ -287,30 +287,48 @@ const wordList_dev = [
     "ntru", "mceliece", "rainbow", "sphincs", "bliss", "newhope",  "lac", "roundx", "saber", "playprime", "classical", "crystals", "bike", 
     "hqc", "sike", "picnic", "fullbetter", "frodokem", "ledacrypt", "dme", "rollo", "rqc", "threebears", "titanium",
 	"ringoffire", "hydrothermalvent", "pyroclasticflow", "continentaldrift", "platetectonics", "bronzeage", "golgiapparatus", "krebscycle", 
-    "aminoacid", "newhorizons", "halleffect", "longmarch", "dreamchaser", "naturalgas", "sanandreas", "rootmeansquare", "halflife",   
+    "aminoacid", "newhorizons", "halleffect", "longmarch", "dreamchaser", "naturalgas", "sanandreas", "rootmeansquare", "halflife",  
 ];
 let wordList = wordList_dev;
 const WORDLIST_URL = 'https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa.txt';
+const WORDLIST_URL_LOCAL = 'dwyl-english-words/words_alpha.txt';
 
 // --- CORE ---
 
 /**
- * Fetches the Google 10,000 English wordlist to be used for memorable passwords.
- * Falls back to a small internal list if the fetch request fails.
+ * Implements a three-tiered fallback system to fetch a wordlist for memorable passwords.
+ * 1. Attempts to fetch a comprehensive list from an online source.
+ * 2. If the online request fails, it falls back to a local project file.
+ * 3. As a final resort, it uses a small, hardcoded list to ensure functionality.
+ * Note: The final fallback list is small and not recommended for real-world use.
  */
 async function fetchWordList() {
-    console.log('Fetching wordlist...');
+    console.log('Attempting to fetch online wordlist...');
     try {
+        // Tier 1: Fetch from online URL
         const response = await fetch(WORDLIST_URL);
-        if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
+        if (!response.ok) throw new Error(`Online fetch failed: ${response.statusText}`);
         const text = await response.text();
         wordList = text.split('\n').filter(word => word.trim() !== '');
-        console.log(`Successfully loaded ${wordList.length} words.`);
-    } catch (error) {
-        console.error('Failed to fetch wordlist. Falling back to dev list.', error);
-        wordList = wordList_dev;
+        console.log(`Successfully loaded ${wordList.length} words from online source.`);
+    } catch (onlineError) {
+        console.warn('Online wordlist fetch failed. Trying local fallback.', onlineError);
+        try {
+            // Tier 2: Fetch from local file
+            const response = await fetch(WORDLIST_URL_LOCAL);
+            if (!response.ok) throw new Error(`Local fetch failed: ${response.statusText}`);
+            const text = await response.text();
+            wordList = text.split('\n').filter(word => word.trim() !== '');
+            console.log(`Successfully loaded ${wordList.length} words from local file.`);
+        } catch (localError) {
+            // Tier 3: Use hardcoded dev list as a final resort
+            console.error('Local wordlist fetch also failed. Falling back to internal dev list.', localError);
+            wordList = wordList_dev;
+            console.log(`Using small internal list of ${wordList.length} words. This is for functionality assurance only.`);
+        }
     }
 }
+
 
 // --- HELPERS ---
 
