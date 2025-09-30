@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+:root {
+    --bg-light: #f5f5f5;
+    --container-bg: #ffffff;
+    --primary-accent: #009c82;
+    --primary-hover: #007f6a;
+    --text-primary: #222222;
+    --text-secondary: #666666;
+    --border-color: #e0e0e0;
+    --output-bg: #f0f2f5;
+    --button-secondary-bg: #333333;
+    --button-secondary-hover: #444444;
+    /* Strength Bar Colors */
+    --strength-0: #d9534f; /* Weak Red */
+    --strength-1: #d9534f; /* Weak Red */
+    --strength-2: #f0ad4e; /* Fair Orange */
+    --strength-3: #5bc0de; /* Good Blue */
+    --strength-4: #5cb85c; /* Strong Green */
+    --bitcoin-orange: #f7931a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-primary);
+    padding: 20px;
+}
+.container {
+    background: var(--container-bg); padding: 40px; border-radius: 8px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1); max-width: 550px;
+    width: 100%; border-top: 4px solid var(--primary-accent); margin: 20px auto;
+}
+.header { text-align: center; margin-bottom: 35px; }
+.header h4 { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; }
+.header p { font-size: 1rem; color: var(--text-secondary); }
+.control-group { margin-bottom: 25px; }
+.control-group label.group-label { font-size: 1rem; font-weight: 500; display: block; margin-bottom: 12px; }
+.input-group { display: flex; align-items: center; }
+.password-length, .serial-count {
+    width: 70px; text-align: center; border: 1px solid var(--border-color);
+    border-radius: 6px; font-size: 1.1em; padding: 8px; margin-right: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.password-length:focus, .serial-count:focus {
+    outline: none; border-color: var(--primary-accent);
+    box-shadow: 0 0 0 3px rgba(0, 156, 130, 0.15);
+}
+.increment-decrement { display: flex; align-items: center; flex-grow: 1; }
+.increment-decrement button {
+    width: 32px; height: 32px; border: 1px solid var(--border-color); background: #fff;
+    color: var(--text-secondary); cursor: pointer; font-size: 1.2em;
+    transition: background-color 0.2s; border-radius: 50%;
+}
+.increment-decrement button:hover { background-color: #f1f1f1; }
+input[type="range"] {
+    -webkit-appearance: none; width: 100%; height: 6px; background: #e9ecef;
+    outline: none; border-radius: 3px; margin: 0 15px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 20px; height: 20px;
+    background: var(--primary-accent); cursor: pointer; border-radius: 50%;
+    transition: transform 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+.checkbox-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.checkbox-container label { display: flex; align-items: center; cursor: pointer; font-size: 0.95em; }
+.checkbox-container input { margin-right: 10px; height: 1.3em; width: 1.3em; accent-color: var(--primary-accent); }
+.output-container { margin-top: 30px; }
+#passwordList {
+    list-style: none; padding: 0; margin: 0;
+    min-height: 50px;
+}
+#passwordList li {
+    font-family: 'Courier New', Courier, monospace;
+    padding: 12px 15px;
+    background-color: var(--output-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+#passwordList li:last-child { margin-bottom: 0; }
+#passwordList li:hover { background-color: #e9ecef; }
+#passwordList li.active {
+    border-color: #e5e5e5;
+    box-shadow: 0 0 0 3px rgb(180 180 180 / 15%);
+}
+.password-text {
+    flex-grow: 1; 
+    text-align: left;
+    font-size: 1.2rem;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.strength-dots-container {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+.strength-dot {
+    width: 8px;
+    height: 16px;
+    background-color: #dcdcdc;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+}
+.strength-dot.strength-0 { background-color: var(--strength-0); }
+.strength-dot.strength-1 { background-color: var(--strength-1); }
+.strength-dot.strength-2 { background-color: var(--strength-2); }
+.strength-dot.strength-3 { background-color: var(--strength-3); }
+.strength-dot.strength-4 { background-color: var(--strength-4); }
+#passwordList li.placeholder {
+    cursor: default; background-color: transparent;
+    color: var(--text-secondary); font-family: 'Inter', sans-serif;
+    font-size: 1rem; justify-content: center;
+}
+.strength-meter { margin-top: 15px; }
+.strength-bar-container {
+    width: 100%; background-color: #e9ecef; border-radius: 4px;
+    height: 8px; overflow: hidden;
+}
+.strength-bar {
+    height: 100%; width: 0%; border-radius: 4px;
+    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+.strength-bar.strength-0 { background-color: var(--strength-0); }
+.strength-bar.strength-1 { background-color: var(--strength-1); }
+.strength-bar.strength-2 { background-color: var(--strength-2); }
+.strength-bar.strength-3 { background-color: var(--strength-3); }
+.strength-bar.strength-4 { background-color: var(--strength-4); }
+#strengthFeedback, #strengthTime {
+    font-size: 0.85rem; color: var(--text-secondary);
+    margin-top: 8px; text-align: center; height: 1.2em;
+}
+#strengthTime { font-weight: 500; }
+.button-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+.main-button {
+    width: 100%; padding: 15px; border: none; border-radius: 6px; color: white;
+    cursor: pointer; font-size: 1.1em; font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.main-button:active { transform: scale(0.98); }
+#copyButton { background-color: var(--button-secondary-bg); }
+#copyButton:hover { background-color: var(--button-secondary-hover); }
+#refreshButton { background-color: var(--primary-accent); }
+#refreshButton:hover { background-color: var(--primary-hover); }
+.page-footer {
+    padding: 20px; margin-top: 40px; border-top: 1px solid var(--border-color);
+    background-color: var(--container-bg);
+}
+.donation-content { max-width: 700px; margin: 0 auto; text-align: center; }
+.donation-content p { color: var(--text-secondary); margin-bottom: 15px; font-size: 1rem; line-height: 1.5; }
+.donation-layout { display: flex; align-items: center; gap: 20px; }
+.btc-qr-code { width: 130px; height: auto; padding: 4px; background-color: white; flex-shrink: 0; }
+.btc-address-container {
+    display: flex; align-items: center; background: var(--output-bg); border-radius: 8px;
+    padding: 12px 15px; border: 1px solid var(--border-color); gap: 15px; flex-grow: 1;
+}
+.btc-address-container code {
+    font-family: 'Courier New', Courier, monospace; color: var(--text-primary);
+    font-size: 1em; overflow-wrap: break-word; word-break: break-all;
+    text-align: left; flex-grow: 1;
+}
+.copy-btc-button {
+    display: flex; align-items: center; justify-content: center; background-color: var(--primary-accent);
+    border: none; border-radius: 6px; width: 40px; height: 40px;
+    cursor: pointer; transition: background-color 0.2s; flex-shrink: 0;
+}
+.copy-btc-button:hover { background-color: var(--primary-hover); }
+.copy-btc-button svg { width: 18px; height: 18px; fill: white; }
+.bitcoin-title { color: var(--text-primary); font-weight: 500; font-size: 1.2rem; margin-bottom: 20px; }
+.bitcoin-emoji { color: var(--bitcoin-orange); font-weight: bold; font-size: 1.2em; }
+
+@media (max-width: 600px) {
+    .container { padding: 20px; }
+    .checkbox-container, .button-group { grid-template-columns: 1fr; }
+    .donation-layout { flex-direction: column; align-items: center; gap: 15px; }
+    .btc-address-container { width: 100%; }
+    .donation-content p { font-size: 0.9rem; }
+    .bitcoin-title { font-size: 1.0rem; }
+    .btc-address-container code { font-size: 0.85rem; }
+}
