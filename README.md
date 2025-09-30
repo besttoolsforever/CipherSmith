@@ -15,7 +15,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Status](https://img.shields.io/badge/status-stable-success.svg)
 
-Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and highly secure**, without sacrificing your length requirements.
+Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and secure**, without sacrificing your length requirements.
 
 <p align="center">
   <img src="CipherSmith.gif" alt="CipherSmith in Action" width="40%">
@@ -40,7 +40,7 @@ Welcome to CipherSmith, the world's first generator designed to forge passwords 
 
 This project was created with a clear objective: to address a common gap found in most password generators.
 
-Many existing tools prioritize complexity, but often fail to deliver passwords that are practical for everyday use. The result is strings that may be highly secure, yet difficult to memorize, type by hand, or apply in real-world contexts.
+Many existing tools prioritize complexity, but often fail to deliver passwords that are practical for everyday use. The result is strings that may be secure, yet difficult to memorize, type by hand, or apply in real-world contexts.
 
 CipherSmith was designed to bridge this gap. It provides passwords that balance both security and usability — strong enough to protect sensitive accounts, yet simple enough to be typed manually in situations such as configuring Wi-Fi networks or setting up new email accounts.
 
@@ -133,7 +133,7 @@ CipherSmith is a powerful tool, and its strength comes from standing on the shou
 
 Our "Memorable" mode is powered by the fantastic **[Google 10,000 English words list](https://github.com/first20hours/google-10000-english)** curated by `first20hours`.
 
-The local fallback list is provided by the `dwyl` **[List Of English Words A text file containing over 466k English words.](https://github.com/dwyl/english-words)** repository, which is graciously licensed under the Unlicense, making it free for all use cases. thanks `dwyl` in advance
+The local fallback list is provided by the `dwyl` **[List Of English Words A text file containing over 466k English words.](https://github.com/dwyl/english-words)** repository, which is graciously licensed under the Unlicense, making it free for all use cases. Thanks `dwyl` in advance.
 
 It's important to know that this data file has a custom license that recommends it for educational and personal use, but advises against commercial use. Therefore, **if you plan to modify, redistribute, or sell a product based on CipherSmith, we strongly recommend you replace the wordlist** with one that has a clear commercial license.
 
