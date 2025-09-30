@@ -185,3 +185,75 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
     .bitcoin-title { font-size: 1.0rem; }
     .btc-address-container code { font-size: 0.85rem; }
 }
+
+/* --- Memorable Mode Toggle Switch Styles --- */
+:root {
+    --gold-accent: #D4AF37; /* Gold color for the active toggle */
+}
+
+.toggle-wrapper {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f9fa; /* A very light grey background */
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.toggle-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px; /* Slightly smaller width */
+    height: 24px; /* Slightly smaller height */
+}
+
+/* Hide the default checkbox */
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The track of the switch */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc; /* Inactive color */
+    transition: .4s;
+    border-radius: 24px; /* Adjust border-radius to match new height */
+}
+
+/* The handle of the switch */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px; /* Smaller height for the handle */
+    width: 18px; /* Smaller width for the handle */
+    left: 3px; /* Adjust left position */
+    bottom: 3px; /* Adjust bottom position */
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* Styles for the active (checked) state */
+input:checked + .slider {
+    background-color: var(--gold-accent);
+    /* box-shadow: 0 0 5px var(--gold-accent); Removed shadow */
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px); /* Adjust translateX to new width */
+}
