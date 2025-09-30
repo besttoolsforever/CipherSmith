@@ -11,7 +11,7 @@
           |_|                                                                                                  
 ```
 
-![Version](https://img.shields.io/badge/version-25.0-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-26.0-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Status](https://img.shields.io/badge/status-stable-success.svg)
 
@@ -25,15 +25,16 @@ Welcome to CipherSmith, the world's first generator designed to forge passwords 
 ### 📂 File Structure
 
 ``` CipherSmith/
-├── LICENSE           # The important legal stuff (MIT License)
-├── README.md         # You are here! The project's manual 👋
-├── index.html        # The main application file (The stage)
-├── script.js         # The core logic and magic (The wizard behind the curtain)
-├── qrcode.jpg        # The aesthetic stuff (BTC donation QR code)
-├── 1.0/              # Archived & obsolete files from v1.0
-│   └── ...
-└── 2.0/              # Archived & obsolete files from v2.0
-└── ...
+├── LICENSE            # The important legal stuff (MIT License)
+├── README.md          # You are here! The project's manual 👋
+├── index.html         # The main application file (The stage)
+├── style.css          # The visual style (The wardrobe)
+├── script.js          # The core logic and magic (The wizard behind the curtain)
+├── qrcode.jpg         # The aesthetic stuff (BTC donation QR code)
+└── dwyl-english-words/  # The English wordlist source files
+    ├── LICENSE.md     # License for the original dwyl/english-words repository
+    ├── README.md      # Explains the wordlist's origin and its use in this project
+    └── words_alpha.txt  # The local wordlist file used by the script
 ```
 ### 🤔 The Solution
 
@@ -46,10 +47,27 @@ CipherSmith was designed to bridge this gap. It provides passwords that balance 
 The core principle is straightforward: generate passwords that are not only safe, but also practical.
 
 ---
+### 🎯 Scope & Purpose: What This Tool Is (and Isn't)
+To ensure clarity, it's important to understand what CipherSmith is designed for, and what it is not.
+
+This is NOT a password manager. CipherSmith generates passwords and does not store, save, or manage them in any way. Once you navigate away, the generated password is gone forever.
+
+This is NOT a passphrase generator. Passphrase tools (like "correct-horse-battery-staple") combine multiple dictionary words to create a long phrase. CipherSmith's "Memorable" mode creates a single, pronounceable, password-like string based on word fragments, not whole words.
+
+A Note on Wordlists for 'Memorable' Mode 📚
+The 'Memorable' mode relies on a robust list of English words. To ensure both quality and reliability, CipherSmith uses a three-tiered approach:
+
+🌐 Online Source (Primary): The generator first attempts to fetch the comprehensive Google 10,000 English words list from its online source for the highest quality word base.
+
+📦 Local Fallback (Secondary): If the online request fails (e.g., you're offline), it seamlessly falls back to loading a large wordlist from the local dwyl-english-words/words_alpha.txt directory included in this project.
+
+⚙️ Built-in Fallback (Final Resort): As a final guarantee, a small, hardcoded list of words is included directly in the script. This ensures core functionality even if the other files are missing. Note: Due to its limited size, this fallback list is not recommended for generating passwords for real-world use and is intended for functionality assurance only.
+
+---
 
 ### 🎉 Features
 
-* **🛡️ Cryptographically Secure:** We use `window.crypto` for all random generation. No `Math.random()` nonsense here! Your passwords are as unpredictable as they get.
+* **🛡️ Cryptographically Secure:** We use `window.crypto` for all random generation.
 * **🧠 Two Modes, One Generator:**
     * **Random Mode:** For classic, brute-force-proof gibberish.
     * **Memorable Mode:** Our special sauce! Creates easy-to-recall passwords at *any* length.
@@ -114,6 +132,8 @@ CipherSmith is a powerful tool, and its strength comes from standing on the shou
 #### The Wordlist & Its License 🧠
 
 Our "Memorable" mode is powered by the fantastic **[Google 10,000 English words list](https://github.com/first20hours/google-10000-english)** curated by `first20hours`.
+
+The local fallback list is provided by the `dwyl` **/english-words** repository, which is graciously licensed under the Unlicense, making it free for all use cases.
 
 It's important to know that this data file has a custom license that recommends it for educational and personal use, but advises against commercial use. Therefore, **if you plan to modify, redistribute, or sell a product based on CipherSmith, we strongly recommend you replace the wordlist** with one that has a clear commercial license.
 
