@@ -133,7 +133,7 @@ CipherSmith is a powerful tool, and its strength comes from standing on the shou
 
 Our "Memorable" mode is powered by the fantastic **[Google 10,000 English words list](https://github.com/first20hours/google-10000-english)** curated by `first20hours`.
 
-The local fallback list is provided by the `dwyl` **/english-words** repository, which is graciously licensed under the Unlicense, making it free for all use cases.
+The local fallback list is provided by the `dwyl` **[List Of English Words A text file containing over 466k English words.](https://github.com/dwyl/english-words)** repository, which is graciously licensed under the Unlicense, making it free for all use cases. thanks `dwyl` in advance
 
 It's important to know that this data file has a custom license that recommends it for educational and personal use, but advises against commercial use. Therefore, **if you plan to modify, redistribute, or sell a product based on CipherSmith, we strongly recommend you replace the wordlist** with one that has a clear commercial license.
 
