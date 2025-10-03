@@ -36,15 +36,16 @@ Welcome to CipherSmith, the world's first generator designed to forge passwords 
     ├── README.md      # Explains the wordlist's origin and its use in this project
     └── words_alpha.txt  # The local wordlist file used by the script
 ```
-### 🤔 The Solution
+### 🤔 Why CipherSmith Exists
 
-This project was created with a clear objective: to address a common gap found in most password generators.
+The Problem
+Most password generators focus solely on complexity, producing strings that may be secure but nearly impossible to remember. This becomes a nightmare in real-life situations: losing your phone, setting up Wi-Fi on a new device, or typing a password by hand during an emergency.
 
-Many existing tools prioritize complexity, but often fail to deliver passwords that are practical for everyday use. The result is strings that may be secure, yet difficult to memorize, type by hand, or apply in real-world contexts.
+The Proposal
+CipherSmith was built to balance both worlds: security and usability. It generates passwords strong enough to protect sensitive accounts, yet simple enough to type quickly when needed.
 
-CipherSmith was designed to bridge this gap. It provides passwords that balance both security and usability — strong enough to protect sensitive accounts, yet simple enough to be typed manually in situations such as configuring Wi-Fi networks or setting up new email accounts.
-
-The core principle is straightforward: generate passwords that are not only safe, but also practical.
+The Principle
+The core idea is straightforward: passwords shouldn’t just be safe—they should also be practical for everyday use.
 
 ---
 ### 🎯 Scope & Purpose: What This Tool Is (and Isn't)
@@ -89,13 +90,19 @@ The 'Memorable' mode relies on a robust list of English words. To ensure both qu
 
 ### 🚀 How to Use
 
-#### Direct Access (Easiest Way) 🖱️
+#### 1. Direct Web Access 🌐
 
 Simply click the link below to use CipherSmith directly in your browser, powered by GitHub Pages:
 
 👉 **[Use CipherSmith Now!](https://besttoolsforever.github.io/CipherSmith/index.html)**
 
-#### Local Use (For Developers) 💻
+#### 2. Google Chrome Extension 🧩
+Integrate CipherSmith directly into your workflow. The extension allows you to open the full generator from its pinned icon or use it as an assistant that appears directly in password fields during account registration, offering seamless compatibility with most websites.
+
+👉 Get the Chrome Extension Now!
+👉 **[Get the Chrome Extension Now! (Comming Soon)](https://besttoolsforever.github.io/CipherSmith/index.html)**
+
+#### 3. Local Use (For Developers) 💻
 
 If you want to run the project on your own machine:
 
