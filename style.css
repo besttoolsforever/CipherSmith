@@ -17,6 +17,7 @@
     --strength-3: #5bc0de; /* Good Blue */
     --strength-4: #5cb85c; /* Strong Green */
     --bitcoin-orange: #f7931a;
+    --gold-accent: #D4AF37;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -143,6 +144,9 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
     width: 100%; padding: 15px; border: none; border-radius: 6px; color: white;
     cursor: pointer; font-size: 1.1em; font-weight: 500;
     transition: background-color 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .main-button:active { transform: scale(0.98); }
 #copyButton { background-color: var(--button-secondary-bg); }
@@ -170,6 +174,7 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
     display: flex; align-items: center; justify-content: center; background-color: var(--primary-accent);
     border: none; border-radius: 6px; width: 40px; height: 40px;
     cursor: pointer; transition: background-color 0.2s; flex-shrink: 0;
+    position: relative;
 }
 .copy-btc-button:hover { background-color: var(--primary-hover); }
 .copy-btc-button svg { width: 18px; height: 18px; fill: white; }
@@ -187,10 +192,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
 }
 
 /* --- Memorable Mode Toggle Switch Styles --- */
-:root {
-    --gold-accent: #D4AF37; /* Gold color for the active toggle */
-}
-
 .toggle-wrapper {
     margin-top: 15px;
     padding: 15px;
@@ -198,7 +199,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
     border-radius: 8px;
     border: 1px solid var(--border-color);
 }
-
 .toggle-label {
     display: flex;
     justify-content: space-between;
@@ -207,22 +207,17 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
     font-size: 1rem;
     font-weight: 500;
 }
-
 .toggle-switch {
     position: relative;
     display: inline-block;
     width: 44px; /* Slightly smaller width */
     height: 24px; /* Slightly smaller height */
 }
-
-/* Hide the default checkbox */
 .toggle-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
-
-/* The track of the switch */
 .slider {
     position: absolute;
     cursor: pointer;
@@ -234,8 +229,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
     transition: .4s;
     border-radius: 24px; /* Adjust border-radius to match new height */
 }
-
-/* The handle of the switch */
 .slider:before {
     position: absolute;
     content: "";
@@ -247,13 +240,52 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
     transition: .4s;
     border-radius: 50%;
 }
-
-/* Styles for the active (checked) state */
 input:checked + .slider {
     background-color: var(--gold-accent);
-    /* box-shadow: 0 0 5px var(--gold-accent); Removed shadow */
 }
-
 input:checked + .slider:before {
     transform: translateX(20px); /* Adjust translateX to new width */
+}
+
+/* --- NEW: Copy Button Feedback Styles --- */
+.main-button .btn-text,
+.main-button .btn-icon {
+    transition: opacity 0.2s ease-in-out;
+}
+.main-button .btn-icon {
+    display: none;
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+#copyButton.copied {
+    background-color: var(--gold-accent);
+}
+#copyButton.copied .btn-text {
+    display: none;
+}
+#copyButton.copied .btn-icon {
+    display: block;
+    opacity: 1;
+    fill: var(--text-primary);
+}
+.copy-btc-button .icon-copy, .copy-btc-button .icon-check {
+    position: absolute;
+    transition: opacity 0.2s ease-in-out;
+}
+.copy-btc-button .icon-check {
+    display: block;
+    opacity: 0;
+    width: 22px;
+    height: 22px;
+    fill: white;
+}
+#copyBtcButton.copied {
+    background-color: var(--strength-4);
+}
+#copyBtcButton.copied .icon-copy {
+    opacity: 0;
+}
+#copyBtcButton.copied .icon-check {
+    opacity: 1;
 }

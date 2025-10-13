@@ -1,5 +1,4 @@
-// CipherSmith v26.0
-
+// CipherSmith v27.0
 // --- GLOBALS ---
 const wordList_dev = [
     "nebula", "photon", "hyper", "terra", "lunar", "solar", "galaxy", "cosmic", "velocity", "momentum",
@@ -287,7 +286,7 @@ const wordList_dev = [
     "ntru", "mceliece", "rainbow", "sphincs", "bliss", "newhope",  "lac", "roundx", "saber", "playprime", "classical", "crystals", "bike", 
     "hqc", "sike", "picnic", "fullbetter", "frodokem", "ledacrypt", "dme", "rollo", "rqc", "threebears", "titanium",
 	"ringoffire", "hydrothermalvent", "pyroclasticflow", "continentaldrift", "platetectonics", "bronzeage", "golgiapparatus", "krebscycle", 
-    "aminoacid", "newhorizons", "halleffect", "longmarch", "dreamchaser", "naturalgas", "sanandreas", "rootmeansquare", "halflife",  
+    "aminoacid", "newhorizons", "halleffect", "longmarch", "dreamchaser", "naturalgas", "sanandreas", "rootmeansquare", "halflife"
 ];
 let wordList = wordList_dev;
 const WORDLIST_URL = 'https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa.txt';
@@ -296,12 +295,12 @@ const WORDLIST_URL_LOCAL = 'dwyl-english-words/words_alpha.txt';
 // --- CORE ---
 
 /**
- * Implements a three-tiered fallback system to fetch a wordlist for memorable passwords.
- * 1. Attempts to fetch a comprehensive list from an online source.
- * 2. If the online request fails, it falls back to a local project file.
- * 3. As a final resort, it uses a small, hardcoded list to ensure functionality.
- * Note: The final fallback list is small and not recommended for real-world use.
+ * @version 26.0
  */
+
+/**
+ * Note: The final fallback list is small and not recommended for real-world use.*/
+ 
 async function fetchWordList() {
     console.log('Attempting to fetch online wordlist...');
     try {
@@ -680,15 +679,22 @@ function generatePasswords() {
 }
 
 /**
- * Copies all generated passwords to the user's clipboard.
+ * Copies all generated passwords to the clipboard and provides visual feedback.
  */
 function copyPasswords() {
     const passwordItems = document.querySelectorAll('#passwordList li .password-text');
     const passwords = Array.from(passwordItems).map(span => span.textContent);
     if (passwords.length === 0) return;
+
     const textToCopy = passwords.join('\n');
     navigator.clipboard.writeText(textToCopy).then(() => {
-        alert("All passwords copied to clipboard! ✨");
+        const copyBtn = document.getElementById('copyButton');
+        copyBtn.classList.add('copied');
+        copyBtn.disabled = true;
+        setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            copyBtn.disabled = false;
+        }, 2000);
     });
 }
 
@@ -737,13 +743,27 @@ document.addEventListener('DOMContentLoaded', () => {
     syncValue(document.getElementById('serialCount'), document.getElementById('countSlider'));
     document.getElementById('refreshButton').addEventListener('click', generatePasswords);
     document.getElementById('copyButton').addEventListener('click', copyPasswords);
+    
     const copyBtcBtn = document.getElementById('copyBtcButton');
     if (copyBtcBtn) {
         copyBtcBtn.addEventListener('click', () => {
             const btcAddress = document.getElementById('btcAddressText').textContent;
-            navigator.clipboard.writeText(btcAddress).then(() => alert('Bitcoin address copied to clipboard!'));
+            navigator.clipboard.writeText(btcAddress).then(() => {
+                copyBtcBtn.classList.add('copied');
+                copyBtcBtn.disabled = true;
+                setTimeout(() => {
+                    copyBtcBtn.classList.remove('copied');
+                    copyBtcBtn.disabled = false;
+                }, 2000);
+            });
         });
     }
-    generatePasswords();
 
+    // Add event listeners for all generator controls
+    const genControls = ['lengthSlider', 'countSlider', 'includeUppercase', 'includeLowercase', 'includeNumbers', 'includeSymbols', 'memorableCheckbox'];
+    genControls.forEach(id => {
+        document.getElementById(id).addEventListener('input', generatePasswords);
+    });
+
+    generatePasswords();
 });

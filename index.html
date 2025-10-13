@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CipherSmith: The Coolest Password Generator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+    <title>CipherSmith: The Password Generator</title>
+    <script src="lib/zxcvbn.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h4>CipherSmith: The Coolest Password Generator</h4>
+        <h4>CipherSmith: The Password Generator</h4>
         <p>The world's first generator to forge passwords that are both truly memorable and secure.</p>
     </div>
 
@@ -69,7 +69,10 @@
     </div>
 
     <div class="button-group">
-        <button class="main-button" id="copyButton">Copy</button>
+        <button class="main-button" id="copyButton">
+            <span class="btn-text">Copy</span>
+            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+        </button>
         <button class="main-button" id="refreshButton">Generate</button>
     </div>
 </div>
@@ -84,6 +87,7 @@
                 <code id="btcAddressText">bc1qufnkjqtzckfqlqsakpv3yjjyg0gce2674wdhv04fmjw635vuj9zsgrzuwp</code>
                 <button id="copyBtcButton" class="copy-btc-button" title="Copy address">
                     <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
                 </button>
             </div>
         </div>
