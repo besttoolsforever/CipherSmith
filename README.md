@@ -11,11 +11,11 @@
           |_|                                                                                                  
 ```
 
-![Version](https://img.shields.io/badge/version-26.0-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-27.0-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Status](https://img.shields.io/badge/status-stable-success.svg)
 
-Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly memorable and secure**, without sacrificing your length requirements.
+Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly Easy-to-Remember Passwords and secure**, without sacrificing your length requirements.
 
 <p align="center">
   <img src="CipherSmith.gif" alt="CipherSmith in Action" width="40%">
@@ -24,17 +24,20 @@ Welcome to CipherSmith, the world's first generator designed to forge passwords 
 ---
 ### 📂 File Structure
 
-``` CipherSmith/
-├── LICENSE            # The important legal stuff (MIT License)
-├── README.md          # You are here! The project's manual 👋
-├── index.html         # The main application file (The stage)
-├── style.css          # The visual style (The wardrobe)
-├── script.js          # The core logic and magic (The wizard behind the curtain)
-├── qrcode.jpg         # The aesthetic stuff (BTC donation QR code)
-└── dwyl-english-words/  # The English wordlist source files
-    ├── LICENSE.md     # License for the original dwyl/english-words repository
-    ├── README.md      # Explains the wordlist's origin and its use in this project
-    └── words_alpha.txt  # The local wordlist file used by the script
+```
+├── dwyl-english-words/ # The English wordlist source files
+│   ├── LICENSE.md      # License for the original dwyl/english-words repository
+│   ├── README.md       # Explains the wordlist's origin and its use
+│   └── words_alpha.txt # The local wordlist file used by the script
+├── lib/                # Third-party libraries
+│   └── zxcvbn.js       # The zxcvbn strength estimation library
+├── CipherSmith.gif     # Animated GIF showing the generator in action
+├── LICENSE             # The important legal stuff (MIT License)
+├── README.md           # You are here! The project's manual 👋
+├── index.html          # The main application file (The stage)
+├── qrcode.jpg          # The aesthetic stuff (BTC donation QR code)
+├── script.js           # The core logic and magic (The wizard)
+└── style.css           # The visual style (The wardrobe)
 ```
 ### 🤔 Why CipherSmith Exists
 
@@ -47,16 +50,35 @@ CipherSmith was built to balance both worlds: security and usability. It generat
 The Principle
 The core idea is straightforward: passwords shouldn’t just be safe—they should also be practical for everyday use.
 
+For those who prioritize maximum security and privacy, the 'Easy-to-Remember Passwords' mode can be easily disabled. You’ll still enjoy a powerful, open-source password generator, and our Google Chrome extension offers a convenient and reliable assistant for managing your credentials.
+
 ---
-### 🎯 Scope & Purpose: What This Tool Is (and Isn't)
+### 🎯 What This Tool Is (and Isn't)
 To ensure clarity, it's important to understand what CipherSmith is designed for, and what it is not.
 
-This is NOT a password manager. CipherSmith generates passwords and does not store, save, or manage them in any way. Once you navigate away, the generated password is gone forever.
+What It Is: ✅
 
-This is NOT a passphrase generator. Passphrase tools (like "correct-horse-battery-staple") combine multiple dictionary words to create a long phrase. CipherSmith's "Memorable" mode creates a single, pronounceable, password-like string based on word fragments, not whole words.
+A local, simple, and reliable password generator.
 
-A Note on Wordlists for 'Memorable' Mode 📚
-The 'Memorable' mode relies on a robust list of English words. To ensure both quality and reliability, CipherSmith uses a three-tiered approach:
+A tool focused on usability and convenience without sacrificing security.
+
+What It Isn't: ❌
+
+A password manager. CipherSmith does not store, save, or manage passwords in any way.
+
+A multi-word passphrase creator (like "correct-horse-battery-staple").
+
+### ⚙️ Total Flexibility
+•Customizable Settings: Adjust the password length (default: 16 characters), character types (uppercase, lowercase, numbers, symbols), and the assistant icon size (small, medium, or large).
+
+•Your preferences are saved for the next use.
+
+•Customizable Dictionary: Replace the default dictionary (...\ciphersmith-extension\dwyl-english-words\words_alpha.txt) with your own, keeping the format of one word per line.
+
+•Icon Disabling: A button in the popup allows you to disable the assistant icon until it's needed again.
+### 📚 A Note on Wordlists for 'Easy-to-Remember Passwords' Mode 
+
+The 'Easy-to-Remember Passwords' mode relies on a robust list of English words. To ensure both quality and reliability, CipherSmith uses a three-tiered approach:
 
 🌐 Online Source (Primary): The generator first attempts to fetch the comprehensive Google 10,000 English words list from its online source for the highest quality word base.
 
@@ -69,9 +91,9 @@ The 'Memorable' mode relies on a robust list of English words. To ensure both qu
 ### 🎉 Features
 
 * **🛡️ Cryptographically Secure:** We use `window.crypto` for all random generation.
-* **🧠 Two Modes, One Generator:**
+* **Two Modes, One Generator:**
     * **Random Mode:** For classic, brute-force-proof gibberish.
-    * **Memorable Mode:** Our special sauce! Creates easy-to-recall passwords at *any* length.
+    * **Easy-to-Remember Passwords Mode:** Our special sauce! Creates easy-to-recall passwords at *any* length.
 * **💪 Live Strength Analysis:** See how tough your new password is in real-time with an integrated `zxcvbn` strength meter. Get instant feedback and time-to-crack estimates!
 * **👮 Security Gate:** We've added a friendly bouncer at the door that ensures you're using at least 3 character types, nudging you toward better security habits.
 * **🎨 Polished & Intuitive UI:** Clean, responsive, and easy on the eyes. Generating passwords is now a pleasure, not a chore.
@@ -99,8 +121,7 @@ Simply click the link below to use CipherSmith directly in your browser, powered
 #### 2. Google Chrome Extension 🧩
 Integrate CipherSmith directly into your workflow. The extension allows you to open the full generator from its pinned icon or use it as an assistant that appears directly in password fields during account registration, offering seamless compatibility with most websites.
 
-👉 Get the Chrome Extension Now!
-👉 **[Get the Chrome Extension Now! (Comming Soon)](https://besttoolsforever.github.io/CipherSmith/index.html)**
+👉 **[Get the Chrome Extension Now! (Comming Soon)](https://chromewebstore.google.com/detail/bbccnjfcpepahpfcbppgembfdfgcmdjl/)**
 
 #### 3. Local Use (For Developers) 💻
 
@@ -136,9 +157,9 @@ This project's source code is licensed under the MIT License. See the `LICENSE` 
 
 CipherSmith is a powerful tool, and its strength comes from standing on the shoulders of giants. Here's a shout-out to the amazing projects that make our password-forging magic possible!
 
-#### The Wordlist & Its License 🧠
+#### The Wordlist & Its License 
 
-Our "Memorable" mode is powered by the fantastic **[Google 10,000 English words list](https://github.com/first20hours/google-10000-english)** curated by `first20hours`.
+Our "Easy-to-Remember Passwords" mode is powered by the fantastic **[Google 10,000 English words list](https://github.com/first20hours/google-10000-english)** curated by `first20hours`.
 
 The local fallback list is provided by the `dwyl` **[List Of English Words A text file containing over 466k English words.](https://github.com/dwyl/english-words)** repository, which is graciously licensed under the Unlicense, making it free for all use cases. Thanks `dwyl` in advance.
 
@@ -153,3 +174,12 @@ Ever wonder how we calculate that "time to crack"? That's the incredible work of
 This powerful library goes way beyond simple character counting to give you a realistic estimate of your password's strength. It's the reason our feedback is so smart!
 
 A huge thank you to these developers for sharing their work with the world! ❤️
+
+#### 🃏 Philosophical Notes on Passwords
+“You do not choose the password—the password chooses you.” – **An allusion to Plato's Myth of Reminiscence.**
+
+“True security does not exist because all knowledge is, by nature, incomplete.” – **Inspired by Karl Popper's ideas on the fallibility of knowledge.**
+
+“True security lies not in the complexity of the key, but in the uncertainty of its location.” – **A thought derived from Heisenberg's Uncertainty Principle.**
+
+“And if you gaze for long into the generated passwords, they will certainly gaze back into you.” – **Inspired by Friedrich Nietzsche.**
