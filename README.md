@@ -15,7 +15,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Status](https://img.shields.io/badge/status-stable-success.svg)
 
-Welcome to CipherSmith, the world's first generator designed to forge passwords that are both **truly Easy-to-Remember Passwords and secure**, without sacrificing your length requirements.
+**Welcome to CipherSmith, the world's first password generator designed to create truly easy-to-remember and secure passwords, without compromising on length.**
 
 <p align="center">
   <img src="CipherSmith.gif" alt="CipherSmith in Action" width="40%">
