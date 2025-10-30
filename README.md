@@ -11,7 +11,7 @@
           |_|                                                                                                  
 ```
 
-![Version](https://img.shields.io/badge/version-27.0-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-28.0-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Status](https://img.shields.io/badge/status-stable-success.svg)
 
@@ -29,13 +29,13 @@
 │   ├── LICENSE.md      # License for the original dwyl/english-words repository
 │   ├── README.md       # Explains the wordlist's origin and its use
 │   └── words_alpha.txt # The local wordlist file used by the script
+├── images              # The aesthetic stuff (UI graphics & donation QR code)
 ├── lib/                # Third-party libraries
 │   └── zxcvbn.js       # The zxcvbn strength estimation library
 ├── CipherSmith.gif     # Animated GIF showing the generator in action
 ├── LICENSE             # The important legal stuff (MIT License)
 ├── README.md           # You are here! The project's manual 👋
-├── index.html          # The main application file (The stage)
-├── qrcode.jpg          # The aesthetic stuff (BTC donation QR code)
+├── index.html          # The main application file (The stage) and landing page
 ├── script.js           # The core logic and magic (The wizard)
 └── style.css           # The visual style (The wardrobe)
 ```
@@ -86,6 +86,8 @@ The 'Easy-to-Remember Passwords' mode relies on a robust list of English words. 
 
 ⚙️ Built-in Fallback (Final Resort): As a final guarantee, a small, hardcoded list of words is included directly in the script. This ensures core functionality even if the other files are missing. Note: Due to its limited size, this fallback list is not recommended for generating passwords for real-world use and is intended for functionality assurance only.
 
+**A Note on the Chrome Extension Version:** For maximum privacy and offline reliability, the browser extension version uses **only** the local `words_alpha.txt` dictionary. It does not fetch online lists or require the other fallbacks, as the dictionary is bundled directly with the extension.
+
 ---
 
 ### 🎉 Features
@@ -121,7 +123,7 @@ Simply click the link below to use CipherSmith directly in your browser, powered
 #### 2. Google Chrome Extension 🧩
 Integrate CipherSmith directly into your workflow. The extension allows you to open the full generator from its pinned icon or use it as an assistant that appears directly in password fields during account registration, offering seamless compatibility with most websites.
 
-👉 **[Get the Chrome Extension Now! (Comming Soon)](https://chromewebstore.google.com/detail/bbccnjfcpepahpfcbppgembfdfgcmdjl/)**
+👉 **[Get the Chrome Extension Now!](https://chromewebstore.google.com/detail/bbccnjfcpepahpfcbppgembfdfgcmdjl/)**
 
 #### 3. Local Use (For Developers) 💻
 
