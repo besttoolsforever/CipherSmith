@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CipherSmith - Password Generator</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Teko:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="preload" href="lib/zxcvbn.js" as="script">
+	<link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="dwyl-english-words/words_alpha.txt" as="fetch">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- CSS Reset & Base (Landing Page) --- */
+        :root {
+            --color-primary-dark: #2F4858;
+            --color-primary-light: #00796B;
+            --color-accent: #E1B12C;
+            --color-text: #333333;
+            --color-light-bg: #F4F7F6;
+            --color-white: #FFFFFF;
+            --color-border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Define a fonte padrão da landing page */
+        body {
+            font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--color-text);
+            background-color: var(--color-light-bg);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Apenas imagens da landing page, não do gerador */
+        .landing-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Teko', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--color-primary-dark);
+            margin-bottom: 15px;
+        }
+
+        h1 { font-size: 3.5rem; line-height: 1.1; }
+        h2 { font-size: 2.8rem; line-height: 1.2; text-align: center; }
+        h3 { font-size: 2rem; }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        section {
+             padding: 80px 0;
+        }
+
+        /* --- Header --- */
+        .main-header {
+            background-color: var(--color-white);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px; /* Space between buttons */
+            align-items: center;
+        }
+
+        .logo {
+            height: 45px;
+            width: auto;
+        }
+
+        .cta-button {
+            display: inline-flex; /* Use flexbox for button content alignment */
+            align-items: center;
+            background-color: var(--color-primary-light);
+            color: var(--color-white);
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        .cta-button:hover {
+            background-color: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* --- GitHub Button Specific Styles --- */
+        .github-button {
+            background-color: #24292e; /* GitHub dark grey */
+            color: var(--color-white);
+            border: 1px solid #24292e;
+            padding: 10px 20px; /* Slightly smaller padding than main CTA */
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px; /* Space between icon and text */
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .github-button:hover {
+            background-color: #000000; /* Darker on hover */
+            border-color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .github-button svg {
+            fill: var(--color-white);
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+
+        /* --- GOOGLE TRANSLATE WIDGET --- */
+        #google_translate_element {
+            padding: 10px 0;
+            background-color: var(--color-light-bg);
+            border-bottom: 1px solid var(--color-border);
+            text-align: center;
+        }
+        
+        .goog-te-gadget {
+            font-family: 'Roboto', sans-serif !important;
+            text-transform: uppercase;
+        }
+        .goog-te-gadget-simple {
+            background-color: var(--color-white) !important;
+            border: 1px solid var(--color-border) !important;
+            padding: 8px 10px !important;
+            border-radius: 8px !important;
+        }
+        .goog-te-menu-value span {
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            color: var(--color-text) !important;
+        }
+
+
+        /* --- Post-Install Welcome Banner (CONDICIONAL) --- */
+        .welcome-banner {
+            display: none; /* Hidden by default */
+            background-color: #FFFBEB;
+            color: #725002;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 30px auto 0 auto;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border: 1px solid #FDE68A;
+        }
+        
+        .welcome-banner strong {
+             display: block;
+             font-size: 1.4rem;
+             font-weight: 700;
+             margin-bottom: 5px;
+             color: #4B3803;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding-top: 60px;
+            background-color: var(--color-white);
+        }
+
+        .hero .container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .hero-image {
+            flex: 1;
+        }
+        
+        .hero-image img {
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* --- SEÇÃO: VÍDEO DEMO --- */
+        #demo-video {
+            background-color: var(--color-light-bg); 
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            background: #000;
+            max-width: 900px; 
+            margin: 0 auto;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+
+        /* --- Features Section --- */
+        .features {
+            background-color: var(--color-white);
+        }
+
+        .features h2 {
+            margin-bottom: 60px;
+        }
+
+        .feature-block {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .feature-block.reverse {
+            flex-direction: row-reverse;
+        }
+        
+        .feature-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-text, .feature-image {
+            flex: 1;
+        }
+
+        .feature-image .landing-img {
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #ddd;
+        }
+        
+        /* --- SEÇÃO: WEB GENERATOR --- */
+        #web-generator {
+            background-color: var(--color-light-bg);
+        }
+        
+        /* * The wrapper ID '#native-generator-wrapper' is used to scope
+         * the styles from the external 'style.css' file so they
+         * only apply to the generator embedded on this page.
+        */
+        #native-generator-wrapper {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* * Generator CSS (v27) is now loaded from external 'style.css'
+         * All styles are prefixed with #native-generator-wrapper
+         * (This empty space is where the embedded styles were)
+        */
+
+
+        /* --- Seção "Core" (Ex-Security) --- */
+        .core-section {
+            background-color: var(--color-primary-dark);
+            color: var(--color-white);
+            text-align: center;
+        }
+
+        .core-section h2 {
+            color: var(--color-white);
+        }
+
+        .core-section p {
+            font-size: 1.15rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .core-section-note {
+            font-weight: 700;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            font-size: 1.2rem;
+        }
+
+        /* --- Final CTA --- */
+        .final-cta {
+            background-color: var(--color-light-bg);
+            text-align: center;
+        }
+        
+        .final-cta h2 {
+            margin-bottom: 30px;
+        }
+
+        /* --- Footer (da Landing Page) --- */
+        .main-footer {
+            background-color: var(--color-text);
+            color: #aaa;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .main-footer p {
+            margin-bottom: 0;
+        }
+
+        /* --- Responsive Design (Landing Page) --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2.2rem; }
+            h3 { font-size: 1.8rem; }
+        
+            .main-header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-buttons {
+                flex-direction: column; /* Stack buttons on small screens */
+                width: 100%; /* Make buttons take full width */
+            }
+
+            .cta-button, .github-button {
+                width: 100%; /* Make buttons take full width */
+                justify-content: center; /* Center content in buttons */
+            }
+
+            .hero .container,
+            .feature-block,
+            .feature-block.reverse {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                text-align: left;
+                width: 100%;
+            }
+            
+            .hero-image {
+                width: 100%;
+            }
+            
+            .hero .container {
+                text-align: left;
+                align-items: flex-start;
+            }
+            
+            .hero-text .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .feature-block {
+                text-align: left;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="google_translate_element"></div>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="https://github.com/besttoolsforever/CipherSmith" target="_blank" rel="noopener noreferrer">
+                <img src="images/ciphersmith-logo_s.jpg" alt="CipherSmith Logo" class="logo landing-img">
+            </a>
+            <div class="header-buttons">
+                <a href="https://chromewebstore.google.com/detail/ciphersmith-password-gene/bbccnjfcpepahpfcbppgembfdfgcmdjl" class="cta-button" target="_blank" rel="noopener noreferrer">Add to Chrome - It's Free</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+        <div class="container">
+            <div class="welcome-banner" id="welcome-banner">
+                <strong>Thank You for Installing CipherSmith!</strong>
+                To get started, pin the icon to your toolbar for easy access.
+            </div>
+        </div>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-text">
+                    <h1>Total Control & Flexibility</h1>
+                    <p>
+                        CipherSmith adapts to your specific needs. Open the extension to access a full suite of customization options, allowing you to create the perfect password for any situation.
+                    </p>
+                    
+                    <a href="https://chromewebstore.google.com/detail/ciphersmith-password-gene/bbccnjfcpepahpfcbppgembfdfgcmdjl" class="cta-button" target="_blank" rel="noopener noreferrer">Get CipherSmith Now</a>
+                </div>
+                
+                <div class="hero-image">
+                    <img src="images/feature-inline.png" alt="CipherSmith icon appearing in a password field" class="landing-img">
+                </div>
+            </div>
+        </section>
+        <section id="demo-video">
+            <div class="container">
+                 <h2>Watch the Demo</h2>
+                 <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/6y_9HfggYbU" 
+                        title="CipherSmith Demo Video" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Features That Set You Free</h2>
+
+                <div class="feature-block">
+                    <div class="feature-text">
+                        <h3>Instant Generation, Right Where You Need It</h3>
+                        <p>
+                            Forget copying and pasting from another app. CipherSmith's intelligent assistant icon appears directly within password fields, streamlining your sign-up process.
+                        </p>
+                        <p>
+                            A single click is all it takes to generate a cryptographically secure password, eliminating hassle and saving you time. It's security that's built to be convenient.
+                        </p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="images/popimag.jpg" alt="Demonstration of the inline password generator icon" class="landing-img">
+                    </div>
+                </div>
+                <section id="web-generator">
+                    <div class="container">
+                        <h2>Try the Web Version Now</h2>
+                        
+                        <div id="native-generator-wrapper">
+                            
+                            <div class="container">
+                                <div class="header">
+                                    <h4>CipherSmith: The Password Generator</h4>
+                                    <p>The world's first generator to forge secure — and easy-to-remember — passwords.</p>
+                                </div>
+                            
+                                <div class="control-group">
+                                    <label for="passwordLength" class="group-label">Password Length:</label>
+                                    <div class="input-group">
+                                        <input type="number" id="passwordLength" class="password-length" value="16" min="6" max="128">
+                                        <div class="increment-decrement">
+                                            <button onclick="pg_decrement('passwordLength')">-</button>
+                                            <input type="range" id="lengthSlider" min="6" max="128" value="16">
+                                            <button onclick="pg_increment('passwordLength')">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label for="serialCount" class="group-label">Number of Passwords:</label>
+                                    <div class="input-group">
+                                        <input type="number" id="serialCount" class="serial-count" value="1" min="1" max="99">
+                                        <div class="increment-decrement">
+                                            <button onclick="pg_decrement('serialCount')">-</button>
+                                            <input type="range" id="countSlider" min="1" max="99" value="1">
+                                            <button onclick="pg_increment('serialCount')">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label class="group-label">Character Types:</label>
+                                    <div class="checkbox-container">
+                                        <label><input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)</label>
+                                        <label><input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)</label>
+                                        <label><input type="checkbox" id="includeNumbers" checked> Numbers (0-9)</label>
+                                        <label><input type="checkbox" id="includeSymbols" checked> Symbols (@#$)</label>
+                                    </div>
+                                </div>
+                            
+                                <div class="control-group toggle-wrapper">
+                                    <label class="toggle-label" for="memorableCheckbox">
+                                        <span>Easy-to-Remember Passwords</span>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="memorableCheckbox" checked>
+                                            <span class="slider"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                            
+                                <div class="output-container">
+                                    <ul id="passwordList"></ul>
+                                    <div class="strength-meter">
+                                        <div class="strength-bar-container">
+                                            <div id="strengthBar" class="strength-bar"></div>
+                                        </div>
+                                        <p id="strengthFeedback"></p>
+                                        <p id="strengthTime"></p>
+                                    </div>
+                                </div>
+                            
+                                <div class="button-group">
+                                    <button class="main-button" id="copyButton">
+                                        <span class="btn-text">Copy</span>
+                                        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                                    </button>
+                                    <button class="main-button" id="refreshButton">Generate</button>
+                                </div>
+                            </div>
+                            
+                            <footer class="page-footer">
+                                <div class="donation-content">
+                                    <p>This is open-source software. Consider supporting its development.</p>
+                                    <p class="bitcoin-title">Support with <span class="bitcoin-emoji">₿</span>itcoin</p>
+                                    <div class="donation-layout">
+                                        <img src="images/qrcode.jpg" alt="BTC Donation QR Code" class="btc-qr-code">
+                                        <div class="btc-address-container">
+                                            <code id="btcAddressText">bc1qufnkjqtzckfqlqsakpv3yjjyg0gce2674wdhv04fmjw635vuj9zsgrzuwp</code>
+                                            <button id="copyBtcButton" class="copy-btc-button" title="Copy address">
+                                                <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                                                <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </section>
+                <div class="feature-block reverse"> 
+                    <div class="feature-text">
+                        <h3>Effortless Generation, Two Powerful Modes</h3>
+                        <p>
+                            Generate robust passwords with a single click from the extension popup. Choose between traditional random passwords or our unique "easy-to-remember" mode.
+                        </p>
+                        <p>
+                            This special mode combines word fragments for better typing and memorization without compromising security, all while meeting length requirements.
+                        </p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="images/security.png" alt="The CipherSmith extension popup UI" class="landing-img">
+                    </div>
+                </div>
+                <div class="feature-block">
+                    <div class="feature-text">
+                        <h3>Global Reach, Native Feel</h3>
+                        <p>
+                            CipherSmith is designed for global use, offering native support for 54 different languages.
+                        </p>
+                        <p>
+                            This ensures the extension provides a practical and intuitive experience, no matter where you are in the world.
+                        </p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="images/languages-feature.jpg" alt="A globe showing 54 languages supported" class="landing-img">
+                    </div>
+                </div>
+                <div class="feature-block reverse"> 
+                    <div class="feature-text">
+                        <h3>Open Source & Community Driven</h3>
+                        <p>
+                            CipherSmith is built on transparency. As an open-source project, its code is available for anyone to review, audit, and contribute to.
+                        </p>
+                        <p>
+                            We believe in community-driven security. Visit our GitHub repository to see how it works, suggest new features, or help us improve.
+                        </p>
+						<a href="https://github.com/besttoolsforever/CipherSmith" class="github-button" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+</svg>
+                    Visit GitHub
+                </a>
+                    </div>
+                    <div class="feature-image">
+                        <img src="images/mascote.jpg" alt="CipherSmith Open Source on GitHub" class="landing-img">
+                    </div>
+                </div>
+                </div>
+        </section>
+        <section class="core-section">
+            <div class="container">
+                <h2>The Perfect Balance of Strong and Simple.</h2>
+                <p class="core-section-note">
+                    This is NOT a password manager.
+                </p>
+                <p>
+                    CipherSmith generates passwords and does not store, save, or manage them in any way. Once you navigate away, the generated password is gone forever. All generation happens locally in your browser for maximum privacy. We use `window.crypto` for cryptographically secure random generation.
+                </p>
+            </div>
+        </section>
+        <section class="final-cta">
+            <div class="container">
+                <h2>Ready to Simplify Your Passwords?</h2>
+                <p>Get the ultimate password companion for your browser. It's fast, practical, and free.</p>
+                <a href="https://chromewebstore.google.com/detail/ciphersmith-password-gene/bbccnjfcpepahpfcbppgembfdfgcmdjl" class="cta-button" target="_blank" rel="noopener noreferrer">Add CipherSmith to Chrome</a>
+            </div>
+        </section>
+        </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>© <span id="copyright-year">2025</span> CipherSmith. All rights reserved.</p>
+            <p>This project is open-source and licensed under the MIT License.</p>
+        </div>
+    </footer>
+    <script type="text/javascript">
+        /**
+         * @fileoverview Initializes the Google Translate Element.
+         * @suppress {missingProperties}
+         */
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+ 
+    
+    <script src="lib/zxcvbn.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        /**
+         * @fileoverview DOMContentLoaded event listener for page initialization.
+         * Handles welcome banner display and dynamic copyright year.
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            /**
+             * Handles the display of the welcome banner if the URL hash is '#thanks'.
+             * @function
+             * @listens DOMContentLoaded
+             */
+            if (window.location.hash === '#thanks') {
+                var banner = document.getElementById('welcome-banner');
+                if (banner) {
+                    banner.style.display = 'block';
+                }
+            }
+
+            /**
+             * Dynamically updates the copyright year in the footer.
+             * Sets a range if the current year is after the start year, otherwise sets the start year.
+             * @function
+             * @listens DOMContentLoaded
+             */
+            var startYear = 2025; // Hardcoded start year for the project
+            var currentYear = new Date().getFullYear(); // Get current year from system
+            var yearElement = document.getElementById('copyright-year');
+            
+            if (yearElement) {
+                if (currentYear > startYear) {
+                    yearElement.textContent = startYear + ' - ' + currentYear;
+                } else {
+                    yearElement.textContent = startYear;
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
